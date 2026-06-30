@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fdfcfb;
+  --foreground: #1a140f;
+  --ink-soft: #6b5e54;
+  --border: #e6ddd4;
+  --surface: #f8f6f3;
+  --surface-2: #f3efea;
+  --accent: #f2f6f2;
+  --moss: #4f7a59;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ink-soft: var(--ink-soft);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-accent: var(--accent);
+  --color-moss: var(--moss);
+  --color-secondary: var(--surface);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.grid-bg {
+  background-size: 24px 24px;
+  background-image: linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+}
+
+.hairline {
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+.h-4\.5 {
+  height: 1.125rem;
+}
+
+.w-4\.5 {
+  width: 1.125rem;
+}
