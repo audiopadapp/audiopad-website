@@ -15,17 +15,17 @@ function Compare() {
   ];
 
   return (
-    <section id="compare" className="border-b border-border/70 mb-20 sm:mb-24 md:mb-28">
+    <section id="compare" className=" mb-20 sm:mb-24 md:mb-28">
       <div className="container-narrow py-16 sm:py-20 md:py-24">
         <SectionHeading
-          eyebrow="Why Echo"
+          eyebrow="Why AudioPad"
           title="A free alternative that isn't a downgrade."
-          description="Paid soundboards exist. Echo matches them on the things that matter — and removes the things that don't."
+          description="Paid soundboards exist. AudioPad matches them on the things that matter — and removes the things that don't."
         />
         <div className="mt-10 sm:mt-12 overflow-hidden rounded-xl border border-border bg-background">
           <div className="grid grid-cols-3 border-b border-border bg-surface/60 px-4 sm:px-6 py-4 text-xs uppercase tracking-[0.14em] text-ink-soft font-sans">
             <div>Capability</div>
-            <div className="text-center font-semibold text-foreground">Echo</div>
+            <div className="text-center font-semibold text-foreground">AudioPad</div>
             <div className="text-center">Paid alternatives</div>
           </div>
           {rows.map((r, i) => (

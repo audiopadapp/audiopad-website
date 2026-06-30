@@ -15,12 +15,12 @@ const features = [
 
 export default function Features() {
   return (
-    <section id="features" className="border-b border-border/70 mb-20 sm:mb-24 md:mb-28 bg-background">
+    <section id="features" className="mb-20 sm:mb-24 md:mb-28 bg-background">
       <div className="container-narrow py-16 sm:py-20 md:py-24">
         <SectionHeading
           eyebrow="Features"
           title="Everything a soundboard should be."
-          description="Echo focuses on the parts that matter: pressing a key and hearing the right sound, instantly, in the right place."
+          description="AudioPad focuses on the parts that matter: pressing a key and hearing the right sound, instantly, in the right place."
         />
         <div className="mt-10 sm:mt-12 md:mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {features.map((f) => (

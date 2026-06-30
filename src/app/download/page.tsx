@@ -1,41 +1,20 @@
-'use client';
+import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import { ArrowRight, Download } from "lucide-react";
-import { useState, useEffect } from "react";
-import { Windows, Apple, Linux } from "@/components/icons";
+import DownloadPlatforms from "@/components/DownloadPlatforms";
 
-type OS = 'windows' | 'macos' | 'linux' | 'unknown';
+export const metadata: Metadata = {
+  title: "Download",
+  description: "Download AudioPad for Windows, macOS, and Linux — free, open-source soundboard.",
+};
 
-function getOS(): OS {
-  if (typeof window === 'undefined') return 'unknown';
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  
-  if (userAgent.includes('win')) return 'windows';
-  if (userAgent.includes('mac')) return 'macos';
-  if (userAgent.includes('linux')) return 'linux';
-  return 'unknown';
-}
+const versionInfo = {
+  version: "v1.0.0",
+  releaseDate: "June 2024",
+  changelog: "https://github.com/echo-app/echo/releases",
+};
 
 export default function DownloadPage() {
-  const [os, setOs] = useState<OS>('unknown');
-
-  useEffect(() => {
-    setOs(getOS());
-  }, []);
-
-  const builds = [
-    { os: "Windows", key: "windows" as OS, detail: ".exe · 14 MB · Win 10/11", icon: Windows },
-    { os: "macOS", key: "macos" as OS, detail: ".dmg · 16 MB · Universal", icon: Apple },
-    { os: "Linux", key: "linux" as OS, detail: ".deb · .rpm · AppImage", icon: Linux },
-  ];
-
-  const versionInfo = {
-    version: "v1.0.0",
-    releaseDate: "June 2024",
-    changelog: "https://github.com/echo-app/echo/releases",
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground font-sans pt-3">
       <Nav />
@@ -60,39 +39,7 @@ export default function DownloadPage() {
             </p>
           </div>
 
-          <div className="mx-auto mt-10 sm:mt-12 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-3">
-            {builds.map((b) => {
-              const isHighlighted = b.key === os;
-              return (
-                <a
-                  key={b.os}
-                  href="#"
-                  className={`group flex flex-col items-start gap-4 rounded-xl border p-5 sm:p-6 transition-all hover:-translate-y-0.5 ${
-                    isHighlighted 
-                      ? 'border-moss/50 bg-moss/5 shadow-md scale-[1.02] z-10' 
-                      : 'border-border bg-background hover:border-moss/40 hover:bg-surface'
-                  }`}
-                >
-                  <div className={`flex h-9 w-9 items-center justify-center rounded-md ${
-                    isHighlighted ? 'bg-moss text-white' : 'bg-accent text-moss'
-                  }`}>
-                    <b.icon className="h-4 w-4" strokeWidth={1.8} />
-                  </div>
-                  <div>
-                    <div className={`text-[15px] font-medium font-sans ${
-                      isHighlighted ? 'text-moss' : 'text-foreground'
-                    }`}>{b.os}</div>
-                    <div className="mt-1 font-mono text-xs text-ink-soft">{b.detail}</div>
-                  </div>
-                  <span className={`mt-auto inline-flex items-center gap-1 text-sm font-medium font-sans ${
-                    isHighlighted ? 'text-moss' : 'text-moss'
-                  }`}>
-                    Download <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                  </span>
-                </a>
-              );
-            })}
-          </div>
+          <DownloadPlatforms />
 
           <div className="mx-auto mt-12 sm:mt-16 max-w-2xl">
             <div className="rounded-xl border border-border bg-surface/60 p-6 sm:p-8">

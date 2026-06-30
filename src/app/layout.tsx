@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,8 +17,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Echo — Free, open-source soundboard for your microphone",
-  description: "Echo is a free, lightweight, open-source soundboard. Play audio through your microphone in Discord, Zoom, Teams, and games — with hotkeys and low latency.",
+  title: {
+    default: "AudioPad — Free, open-source soundboard for your microphone",
+    template: "%s — AudioPad",
+  },
+  description: "AudioPad is a free, lightweight, open-source soundboard. Play audio through your microphone in Discord, Zoom, Teams, and games — with hotkeys and low latency.",
 };
 
 export default function RootLayout({
@@ -30,7 +34,9 @@ export default function RootLayout({
       lang="en"
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full" suppressHydrationWarning>
+        <TooltipProvider>{children}</TooltipProvider>
+      </body>
     </html>
   );
 }

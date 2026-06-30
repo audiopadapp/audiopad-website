@@ -10,7 +10,7 @@ export default function Logo({ className = "" }: { className?: string }) {
         <rect x="14" y="7"  width="2.4" height="10" rx="1.2" fill="currentColor" />
         <rect x="18" y="10" width="2.4" height="4"  rx="1.2" fill="currentColor" />
       </svg>
-      <span className="font-serif text-[1.35rem] leading-none tracking-tight">Echo</span>
+      <span className="font-serif text-[1.35rem] leading-none tracking-tight">AudioPad</span>
     </div>
   );
 }

@@ -8,12 +8,12 @@ export default function DownloadCTA() {
     { os: "Linux", detail: ".deb · .rpm · AppImage" },
   ];
   return (
-    <section id="download" className="border-b border-border/70 bg-surface/40 mb-20 sm:mb-24 md:mb-28">
+    <section id="download" className="p-6 bg-surface/40 mb-20 sm:mb-24 md:mb-28">
       <div className="container-narrow py-16 sm:py-20 md:py-24">
         <div className="mx-auto max-w-2xl text-center">
           <span className="font-mono text-xs uppercase tracking-[0.18em] text-moss">Download</span>
           <h2 className="mt-3 font-serif text-3xl sm:text-4xl md:text-5xl tracking-tight text-foreground">
-            Get Echo. It takes a minute.
+            Get AudioPad. It takes a minute.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-ink-soft font-sans">
             Pick your platform. The download is signed, notarized, and verifiable against the

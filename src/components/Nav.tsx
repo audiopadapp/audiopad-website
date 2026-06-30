@@ -26,10 +26,9 @@ export default function Nav() {
   }, []);
 
   const links = [
-    { href: "/#features", label: "Features" },
-    { href: "/#how", label: "How it works" },
-    { href: "/#compare", label: "Compare" },
-    { href: "/#faq", label: "FAQ" },
+    { href: "/story", label: "Our Story" },
+    { href: "/pricing", label: "Pricing" },
+    { href: "/press", label: "Press" },
     { href: "/download", label: "Download" },
   ];
 

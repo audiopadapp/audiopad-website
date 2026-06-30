@@ -5,13 +5,15 @@ import SectionHeading from "./SectionHeading";
 import Logo from "./Logo";
 import { Github, Windows, Apple, Linux } from "@/components/icons";
 import { useState, useEffect } from "react";
+import ReactBeforeSliderComponent from 'react-before-after-slider-component';
+import 'react-before-after-slider-component/dist/build.css';
 
 type OS = 'windows' | 'macos' | 'linux' | 'unknown';
 
 function getOS(): OS {
   if (typeof window === 'undefined') return 'unknown';
   const userAgent = window.navigator.userAgent.toLowerCase();
-  
+
   if (userAgent.includes('win')) return 'windows';
   if (userAgent.includes('mac')) return 'macos';
   if (userAgent.includes('linux')) return 'linux';
@@ -47,7 +49,7 @@ export default function Hero() {
             A soundboard <em className="italic text-moss">that lives</em> in your microphone.
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg font-sans">
-            Echo plays audio files through your mic — in Discord, Zoom, Teams, OBS, or any game.
+            AudioPad plays audio files through your mic — in Discord, Zoom, Teams, OBS, or any game.
             Free, lightweight, and built to stay out of your way.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
@@ -75,10 +77,20 @@ export default function Hero() {
         {/* Product mockup */}
         <div className="relative mx-auto mt-12 sm:mt-16 max-w-5xl">
           <div className="absolute -inset-x-8 -bottom-8 -top-4 -z-10 rounded-3xl bg-surface-2/60 blur-2xl" />
+
           <div className="hairline overflow-hidden rounded-xl bg-surface shadow-[0_30px_80px_-40px_rgba(60,50,30,0.35)]">
-            <div className="aspect-[1600/1104] bg-surface-2 flex items-center justify-center">
-              <span className="text-ink-soft font-mono text-sm">Add app-mockup.jpg to public directory</span>
-            </div>
+            <ReactBeforeSliderComponent
+              firstImage={{ imageUrl: "/app-mockup-white.png" }}
+              secondImage={{ imageUrl: "/app-mockup-black.png" }}
+              delimiterIconStyles={{
+                width: "20px",
+                height: "20px",
+                borderRadius: "50%",
+                background: "linear-gradient(180deg, white 50%, black 50%)",
+                border: "1px solid #000",
+                boxShadow: "0 0 0 2px white",
+              }}
+            />
           </div>
         </div>
       </div>

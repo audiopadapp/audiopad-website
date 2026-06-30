@@ -10,7 +10,12 @@ import { Github } from "@/components/icons";
 
 import Logo from "./Logo";
 import FooterCol from "./FooterCol";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Footer() {
   const [year, setYear] = useState("");
@@ -20,24 +25,41 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-background mt-2">
-      <div className="container-narrow py-10 sm:py-12">
-        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+    <footer className="bg-background">
+      <div className="container-narrow py-12 sm:py-16">
+        <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-start lg:items-center">
           <div className="max-w-sm">
             <Logo />
-            <p className="mt-3 text-sm leading-relaxed text-ink-soft font-sans">
+            <p className="mt-4 text-sm leading-relaxed text-ink-soft font-sans">
               A free, open-source soundboard for everyone who lives in voice chat.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-x-10 gap-y-3 text-sm sm:grid-cols-3 sm:gap-x-12">
-            <FooterCol title="Product" links={[["Features", "#features"], ["How it works", "#how"], ["Download", "#download"]]} />
+          <div className="grid grid-cols-2 gap-x-12 gap-y-6 text-sm sm:grid-cols-3 sm:gap-x-16">
+            <FooterCol title="Product" links={[["Our Story", "/story"], ["Pricing", "/pricing"], ["Press", "/press"], ["Download", "/download"]]} />
             <FooterCol title="Project" links={[["GitHub", "https://github.com"], ["Changelog", "#"], ["Roadmap", "#"]]} />
             <FooterCol title="Help" links={[["FAQ", "#faq"], ["Docs", "#"], ["Contact", "#"]]} />
           </div>
         </div>
-        <div className="mt-8 sm:mt-10 flex flex-col items-start justify-between gap-3 border-t border-border pt-5 sm:pt-6 text-xs text-ink-soft sm:flex-row sm:items-center">
-          <span className="font-mono">© {year} Echo · MIT License</span>
-          <span className="font-sans">Made by people who got tired of paying for a soundboard.</span>
+        <div className="mt-12 sm:mt-16 flex flex-col items-start justify-between gap-3 border-t border-border text-xs text-ink-soft sm:flex-row sm:items-center">
+          <span className="font-mono">
+            © {year} AudioPad · MIT License
+          </span>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="font-sans cursor-help">
+                  Made by{" "}
+                  <del style={{ textDecorationColor: "red" }}>people</del>{" "}
+                  guy who {"\u{1FAF6}"} you silently.
+                </span>
+              </TooltipTrigger>
+
+              <TooltipContent side="top">
+                <p>Yeah... I can't scream it. {"\u{1F92B}"}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
     </footer>

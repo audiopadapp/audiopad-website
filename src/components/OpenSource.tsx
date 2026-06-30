@@ -1,10 +1,10 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, HeartHandshakeIcon } from "lucide-react";
 import { Github } from "@/components/icons";
 import SectionHeading from "./SectionHeading";
 
 export default function OpenSource() {
   return (
-    <section className="border-b border-border/70 bg-surface mb-20 sm:mb-24 md:mb-28">
+    <section className="bg-surface mb-12 p-6">
       <div className="container-narrow py-16 sm:py-20 md:py-24">
         <div className="grid items-center gap-10 md:gap-12 md:grid-cols-2">
           <div>
@@ -27,32 +27,34 @@ export default function OpenSource() {
                 href="https://github.com"
                 className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-foreground font-sans"
               >
-                Read the docs <ArrowRight className="h-4 w-4" />
+                <HeartHandshakeIcon className="h-4 w-4" /> Contribute
               </a>
             </div>
           </div>
 
-          <div className="hairline overflow-hidden rounded-xl bg-background font-mono text-[12.5px] leading-relaxed shadow-sm">
-            <div className="flex items-center gap-2 border-b border-border bg-surface px-4 py-2.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.78_0.10_30)]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.85_0.10_85)]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.80_0.08_145)]" />
-              <span className="ml-2 text-xs text-ink-soft">~/echo · main</span>
-            </div>
-            <pre className="overflow-x-auto p-4 sm:p-5 text-foreground">
-{`$ git clone https://github.com/echo-app/echo
-$ cd echo && pnpm install
-$ pnpm dev
+<div className="overflow-hidden rounded-2xl border border-[#2a241d] bg-[#14110c] font-mono">
+  {/* Header */}
+  <div className="flex items-center gap-2 px-5 py-2">
+    <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+    <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+    <span className="h-3 w-3 rounded-full bg-[#28c840]" />
 
-  echo ▸ audio engine ready    `}<span className="text-moss">12ms</span>{`
-  echo ▸ virtual mic attached
-  echo ▸ hotkeys bound         `}<span className="text-moss">8 sounds</span>{`
-  echo ▸ listening...
+    <span className="ml-4 text-sm text-[#8d8478]">
+      ~/soundux
+    </span>
+  </div>
 
-MIT License · 14.2 kLOC · 100% TypeScript
-`}
-            </pre>
-          </div>
+  {/* Terminal */}
+  <pre className="overflow-x-auto px-6 py-2 text-[15px] leading-8 text-[#efe2cf]">
+<span className="text-[#52d273]">$</span> git clone https://github.com/soundux/soundux{"\n"}
+<span className="text-[#52d273]">$</span> cd soundux && make{"\n"}
+<span className="text-[#8d8478]"># build complete — 12.4 MB binary</span>{"\n"}
+<span className="text-[#52d273]">$</span> ./soundux{"\n\n"}
+<span className="text-[#f2a64d]">→</span> virtual mic ready{"\n"}
+<span className="text-[#f2a64d]">→</span> watching ~/Sounds{"\n"}
+<span className="text-[#f2a64d]">→</span> hotkeys active
+  </pre>
+</div>
         </div>
       </div>
     </section>

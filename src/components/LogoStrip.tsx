@@ -1,7 +1,7 @@
 export default function LogoStrip() {
   const items = ["Discord", "Zoom", "Microsoft Teams", "OBS Studio", "Steam", "Slack"];
   return (
-    <section className="border-b border-border/70 bg-surface py-16 sm:py-20 md:py-24 mb-20 sm:mb-24 md:mb-28">
+    <section className="bg-surface py-6 sm:py-6 md:py-6 mb-20 sm:mb-24 md:mb-28">
       <div className="container-narrow py-10 sm:py-12">
         <p className="text-center font-mono text-xs uppercase tracking-[0.18em] text-ink-soft">
           Works with the apps you already use
