@@ -1,11 +1,48 @@
 import { ArrowRight, Download } from "lucide-react";
 import SectionHeading from "./SectionHeading";
+import { Windows, Linux } from "@/components/icons";
+import { formatFileSize } from "@/lib/github";
 
-export default function DownloadCTA() {
+type GitHubReleaseAsset = {
+  name: string;
+  browser_download_url: string;
+  size: number;
+};
+
+type DownloadCTAProps = {
+  release: {
+    tag_name: string;
+    html_url: string;
+  } | null;
+  assets: {
+    windows?: GitHubReleaseAsset;
+    linux: {
+      deb?: GitHubReleaseAsset;
+      rpm?: GitHubReleaseAsset;
+      appImage?: GitHubReleaseAsset;
+    };
+  } | null;
+};
+
+export default function DownloadCTA({ release, assets }: DownloadCTAProps) {
   const builds = [
-    { os: "Windows", detail: ".exe · 14 MB · Win 10/11" },
-    { os: "macOS", detail: ".dmg · 16 MB · Universal" },
-    { os: "Linux", detail: ".deb · .rpm · AppImage" },
+    { 
+      os: "Windows", 
+      icon: Windows,
+      detail: assets?.windows 
+        ? `${assets.windows.name} · ${formatFileSize(assets.windows.size)}` 
+        : ".exe · Win 10/11",
+      href: assets?.windows?.browser_download_url || "#"
+    },
+    { 
+      os: "Linux", 
+      icon: Linux,
+      detail: "deb · rpm · AppImage",
+      href: assets?.linux?.deb?.browser_download_url 
+        || assets?.linux?.appImage?.browser_download_url 
+        || assets?.linux?.rpm?.browser_download_url 
+        || "#"
+    },
   ];
   return (
     <section id="download" className="p-6 bg-surface/40 mb-20 sm:mb-24 md:mb-28">
@@ -21,15 +58,15 @@ export default function DownloadCTA() {
           </p>
         </div>
 
-        <div className="mx-auto mt-10 sm:mt-12 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="mx-auto mt-10 sm:mt-12 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2">
           {builds.map((b) => (
             <a
               key={b.os}
-              href="#"
+              href={b.href}
               className="group flex flex-col items-start gap-4 rounded-xl border border-border bg-background p-5 sm:p-6 transition-all hover:-translate-y-0.5 hover:border-moss/40 hover:bg-surface"
             >
               <div className="flex h-9 w-9 items-center justify-center rounded-md bg-accent text-moss">
-                <Download className="h-4 w-4" strokeWidth={1.8} />
+                <b.icon className="h-4 w-4" />
               </div>
               <div>
                 <div className="text-[15px] font-medium text-foreground font-sans">{b.os}</div>
@@ -44,8 +81,8 @@ export default function DownloadCTA() {
 
         <p className="mt-7 sm:mt-8 text-center font-mono text-xs text-ink-soft">
           Prefer to build from source?{" "}
-          <a href="https://github.com" className="text-foreground underline-offset-4 hover:underline">
-            github.com/echo-app/echo
+          <a href={release ? release.html_url : "https://github.com"} className="text-foreground underline-offset-4 hover:underline">
+            github.com/audiopadapp/audiopad
           </a>
         </p>
       </div>

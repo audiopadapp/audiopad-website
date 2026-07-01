@@ -1,0 +1,17 @@
+/* TEAM */
+	AudioPad Team
+	Site: https://audiopad.vercel.app
+	GitHub: https://github.com/echo-app/echo
+
+/* SOFTWARE */
+	AudioPad - Free, open-source soundboard
+	License: MIT License
+
+/* TECHNOLOGIES */
+	Next.js
+	React
+	TypeScript
+	Tailwind CSS
+
+/* THANKS */
+	Thanks to all contributors and the open-source community!

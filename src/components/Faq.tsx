@@ -2,7 +2,7 @@ import SectionHeading from "./SectionHeading";
 
 const faqs = [
   { q: "Is AudioPad really free?", a: "Yes. Free to download, free to use, free to fork. No paid tier, no premium sounds, no upsells. The project is funded by people who like it." },
-  { q: "Does it work on macOS and Linux?", a: "Yes. AudioPad ships native builds for Windows 10/11, macOS 12+, and major Linux distributions (deb, rpm, AppImage)." },
+  { q: "Does it work on Linux?", a: "Yes. AudioPad ships native builds for Windows 10/11 and major Linux distributions (deb, rpm, AppImage)." },
   { q: "Will my voice still come through?", a: "Yes. AudioPad mixes sounds on top of your real microphone, so people hear both. You can toggle 'sound only' for moments when you want just the clip." },
   { q: "Does it require admin rights?", a: "Only the first install — to register the virtual audio device. Day-to-day, AudioPad runs as a normal user-space app." },
   { q: "What audio formats are supported?", a: "MP3, WAV, OGG, FLAC, and M4A out of the box. Files are read directly — no re-encoding, no quality loss." },
@@ -11,7 +11,7 @@ const faqs = [
 
 export default function Faq() {
   return (
-    <section id="faq" className="p-6 bg-surface/40 mb-10">
+    <section id="faq" className="p-6 bg-surface/40">
       <div className="container-narrow py-16 sm:py-20 md:py-24">
         <SectionHeading
           eyebrow="FAQ"

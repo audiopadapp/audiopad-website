@@ -1,4 +1,5 @@
 import SectionHeading from "./SectionHeading";
+import ProductMockup from "./ProductMockup";
 
 const steps = [
   { n: "01", title: "Install AudioPad", body: "Download for your OS and run the installer. It sets up a virtual audio device for you — no manual config." },
@@ -25,6 +26,7 @@ export default function HowItWorks() {
             </li>
           ))}
         </ol>
+        <ProductMockup />
       </div>
     </section>
   );

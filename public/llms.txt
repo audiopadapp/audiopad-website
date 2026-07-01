@@ -1,0 +1,34 @@
+# AudioPad - LLM Access Information
+# Website: https://audiopad.vercel.app
+# GitHub: https://github.com/echo-app/echo
+
+## What is AudioPad?
+AudioPad is a free, open-source soundboard for Windows and Linux that plays audio files through your microphone with low latency, hotkeys, and no telemetry or accounts.
+
+## Key Features
+- Free & open-source (MIT License)
+- Native apps for Windows 10/11, Linux
+- Virtual audio device setup (no manual config)
+- Drag-and-drop audio file management
+- Global hotkeys for instant playback
+- Low-latency performance
+- No telemetry, no accounts, no cloud
+- Works with Discord, Zoom, Teams, OBS, games, etc.
+
+## Pages to Crawl
+- https://audiopad.vercel.app (Homepage)
+- https://audiopad.vercel.app/download (Downloads)
+- https://audiopad.vercel.app/pricing (Pricing, 100% free)
+- https://audiopad.vercel.app/story (Our Story)
+- https://audiopad.vercel.app/press (Press & Brand Kit)
+
+## Structured Data
+- Home: SoftwareApplication schema
+- Download: SoftwareApplication schema
+- Pricing: SoftwareApplication schema
+- Story: Article schema
+- Press: Organization schema
+
+## Brand Assets
+- Logo: https://audiopad.vercel.app/app-mockup-white.png
+- OG Image: https://audiopad.vercel.app/audiopad-og.png

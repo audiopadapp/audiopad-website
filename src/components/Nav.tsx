@@ -3,16 +3,15 @@ import Link from "next/link";
 import Logo from "./Logo";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Github, Windows, Apple, Linux } from "@/components/icons";
+import { Github, Windows, Linux } from "@/components/icons";
 
-type OS = 'windows' | 'macos' | 'linux' | 'unknown';
+type OS = 'windows' | 'linux' | 'unknown';
 
 function getOS(): OS {
   if (typeof window === 'undefined') return 'unknown';
   const userAgent = window.navigator.userAgent.toLowerCase();
   
   if (userAgent.includes('win')) return 'windows';
-  if (userAgent.includes('mac')) return 'macos';
   if (userAgent.includes('linux')) return 'linux';
   return 'unknown';
 }
@@ -26,15 +25,14 @@ export default function Nav() {
   }, []);
 
   const links = [
+    { href: "/", label: "Home" },
     { href: "/story", label: "Our Story" },
     { href: "/pricing", label: "Pricing" },
-    { href: "/press", label: "Press" },
     { href: "/download", label: "Download" },
   ];
 
   const osInfo = {
     windows: { icon: Windows, label: "Download for Windows" },
-    macos: { icon: Apple, label: "Download for macOS" },
     linux: { icon: Linux, label: "Download for Linux" },
     unknown: { icon: null, label: "Download" },
   };

@@ -2,71 +2,191 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import DownloadPlatforms from "@/components/DownloadPlatforms";
+import { 
+  fetchLatestRelease, 
+  fetchAllReleases, 
+  filterReleaseAssets, 
+  formatFileSize 
+} from "@/lib/github";
+import { DownloadIcon } from "lucide-react";
+
 
 export const metadata: Metadata = {
-  title: "Download",
-  description: "Download AudioPad for Windows, macOS, and Linux — free, open-source soundboard.",
+  title: "Download AudioPad",
+  description: "Download AudioPad for Windows and Linux — free, open-source soundboard.",
+  keywords: ["download soundboard", "AudioPad download", "free soundboard download", "Windows soundboard", "Linux soundboard"],
+  openGraph: {
+    type: "website",
+    url: "https://audiopad.vercel.app/download",
+    title: "Download AudioPad",
+    description: "Download AudioPad for Windows and Linux — free, open-source soundboard.",
+    images: ["/audiopad-og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Download AudioPad",
+    description: "Download AudioPad for Windows and Linux — free, open-source soundboard.",
+    images: ["/audiopad-og.png"],
+  },
 };
 
-const versionInfo = {
-  version: "v1.0.0",
-  releaseDate: "June 2024",
-  changelog: "https://github.com/echo-app/echo/releases",
-};
+export default async function DownloadPage() {
+  const latestRelease = await fetchLatestRelease();
+  const allReleases = await fetchAllReleases();
+  const assets = latestRelease ? filterReleaseAssets(latestRelease) : null;
 
-export default function DownloadPage() {
+  const releaseDate = latestRelease 
+    ? new Date(latestRelease.published_at || latestRelease.created_at).toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long' 
+      })
+    : "Unknown Date";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AudioPad",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": ["Windows", "Linux"],
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Download AudioPad for Windows and Linux — free, open-source soundboard.",
+    "url": "https://audiopad.vercel.app/download",
+    "image": "https://audiopad.vercel.app/audiopad-og.png",
+    "author": {
+      "@type": "Organization",
+      "name": "AudioPad Team"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AudioPad"
+    },
+    "softwareVersion": latestRelease ? latestRelease.tag_name.replace('v', '') : "1.0.0",
+    "license": "https://opensource.org/licenses/MIT"
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans pt-3">
-      <Nav />
-      <main className="relative mt-24 pt-8 pb-20 sm:pt-12 sm:pb-24 md:pt-16 md:pb-28">
-        <div className="pointer-events-none absolute inset-0 -z-10 grid-bg opacity-40" />
-        <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-80 w-[500px] rounded-full bg-moss/10 blur-3xl -z-10" />
-        <div className="container-narrow relative z-10">
-          <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs text-ink-soft font-mono mb-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-moss" />
-              {versionInfo.version} — Now available
-            </span>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-tight text-foreground">
-              Get AudioPad
-            </h1>
-            <p className="mt-4 text-base leading-relaxed text-ink-soft font-sans">
-              Pick your platform. The download is signed, notarized, and verifiable against the
-              checksums in the GitHub release.
-            </p>
-            <p className="mt-3 font-mono text-xs text-ink-soft">
-              Current version: <span className="text-foreground">{versionInfo.version}</span> · {versionInfo.releaseDate}
-            </p>
-          </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-background text-foreground font-sans pt-3">
+        <Nav />
+        <main className="relative">
+          <DownloadPlatforms release={latestRelease} assets={assets} />
 
-          <DownloadPlatforms />
+          <section className="p-12 bg-surface/40">
+            <div className="container-narrow py-16 sm:py-20 md:py-24">
+              <div className="mx-auto max-w-2xl text-center">
+                <div className="rounded-xl border border-border bg-background p-6 sm:p-8">
+                  <h2 className="font-serif text-xl sm:text-2xl tracking-tight text-foreground">Build from source</h2>
+                  <p className="mt-3 text-sm text-ink-soft font-sans">
+                    Prefer to build AudioPad yourself? We provide complete source code and build instructions.
+                  </p>
+                  <a
+                    href={latestRelease ? latestRelease.html_url : "https://github.com/audiopadapp/audiopad"}
+                    className="mt-4 inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90 font-sans"
+                  >
+                    View on GitHub
+                  </a>
+                </div>
+              </div>
 
-          <div className="mx-auto mt-12 sm:mt-16 max-w-2xl">
-            <div className="rounded-xl border border-border bg-surface/60 p-6 sm:p-8">
-              <h2 className="font-serif text-xl sm:text-2xl tracking-tight text-foreground">Build from source</h2>
-              <p className="mt-3 text-sm text-ink-soft font-sans">
-                Prefer to build AudioPad yourself? We provide complete source code and build instructions.
-              </p>
-              <a
-                href="https://github.com"
-                className="mt-4 inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90 font-sans"
-              >
-                View on GitHub
-              </a>
+              <div className="mx-auto mt-10 sm:mt-12 text-center">
+                <a
+                  href={latestRelease ? latestRelease.html_url : "https://github.com/audiopadapp/audiopad/releases"}
+                  className="font-mono text-xs text-ink-soft hover:text-foreground underline-offset-4 hover:underline"
+                >
+                  View changelog
+                </a>
+              </div>
+
+              {/* Version History Table */}
+              {allReleases.length > 0 && (
+                <div className="mx-auto mt-16 sm:mt-20 max-w-3xl">
+                  <h2 className="font-serif text-xl sm:text-2xl tracking-tight text-foreground text-center mb-8">
+                    Previous Versions
+                  </h2>
+                  <div className="overflow-x-auto rounded-xl border border-border bg-background">
+                    <table className="w-full text-left">
+                      <thead className="border-b border-border bg-surface">
+                        <tr>
+                          <th className="px-4 py-3 text-xs font-mono text-ink-soft uppercase tracking-wider">Version</th>
+                          <th className="px-4 py-3 text-xs font-mono text-ink-soft uppercase tracking-wider">Date</th>
+                          <th className="px-4 py-3 text-xs font-mono text-ink-soft uppercase tracking-wider">Download</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-border">
+                        {allReleases.map((release) => {
+                          const relAssets = filterReleaseAssets(release);
+                          const date = new Date(release.published_at || release.created_at);
+                          return (
+                            <tr key={release.id} className="hover:bg-surface/30 transition-colors">
+                              <td className="px-4 py-4 text-sm font-medium text-foreground">
+                                <a href={release.html_url} className="hover:underline">
+                                  {release.tag_name}
+                                </a>
+                              </td>
+                              <td className="px-4 py-4 text-sm text-ink-soft font-mono">
+                                {date.toLocaleDateString('en-US')}
+                              </td>
+                              <td className="px-4 py-4 text-sm">
+                                <div className="flex flex-wrap gap-2">
+                                  {relAssets.windows && (
+                                    <a 
+                                      href={relAssets.windows.browser_download_url} 
+                                      className="inline-flex items-center gap-1 rounded border border-border px-2 py-1 text-xs font-medium text-ink-soft hover:border-black hover:text-black transition-colors"
+                                    >
+                                      Windows {`(${formatFileSize(relAssets.windows.size)})`}
+                                      <DownloadIcon className="h-4 w-4" />
+                                    </a>
+                                  )}
+                                  {relAssets.linux.deb && (
+                                    <a 
+                                      href={relAssets.linux.deb.browser_download_url} 
+                                      className="inline-flex items-center gap-1 rounded border border-border px-2 py-1 text-xs font-medium text-ink-soft hover:border-black hover:text-black transition-colors"
+                                    >
+                                      deb {`(${formatFileSize(relAssets.linux.deb.size)})`}
+                                      <DownloadIcon className="h-4 w-4" />
+                                    </a>
+                                  )}
+                                  {relAssets.linux.rpm && (
+                                    <a 
+                                      href={relAssets.linux.rpm.browser_download_url} 
+                                      className="inline-flex items-center gap-1 rounded border border-border px-2 py-1 text-xs font-medium text-ink-soft hover:border-black hover:text-black transition-colors"
+                                    >
+                                      rpm {`(${formatFileSize(relAssets.linux.rpm.size)})`}
+                                      <DownloadIcon className="h-4 w-4" />
+                                    </a>
+                                  )}
+                                  {relAssets.linux.appImage && (
+                                    <a 
+                                      href={relAssets.linux.appImage.browser_download_url} 
+                                      className="inline-flex items-center gap-1 rounded border border-border px-2 py-1 text-xs font-medium text-ink-soft hover:border-black hover:text-black transition-colors"
+                                    >
+                                      AppImage {`(${formatFileSize(relAssets.linux.appImage.size)})`}
+                                      <DownloadIcon className="h-4 w-4" />
+                                    </a>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-
-          <div className="mx-auto mt-10 sm:mt-12 text-center">
-            <a
-              href={versionInfo.changelog}
-              className="font-mono text-xs text-ink-soft hover:text-foreground underline-offset-4 hover:underline"
-            >
-              View changelog
-            </a>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }

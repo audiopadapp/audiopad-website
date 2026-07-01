@@ -10,27 +10,84 @@ import OpenSource from "@/components/OpenSource";
 import Faq from "@/components/Faq";
 import DownloadCTA from "@/components/DownloadCTA";
 import Footer from "@/components/Footer";
+import { fetchLatestRelease, filterReleaseAssets, formatFileSize } from "@/lib/github";
 
 export const metadata: Metadata = {
   title: "AudioPad — Free, open-source soundboard for your microphone",
   description: "AudioPad is a free, lightweight, open-source soundboard. Play audio through your microphone in Discord, Zoom, Teams, and games — with hotkeys and low latency.",
+  keywords: ["soundboard", "free soundboard", "open source soundboard", "microphone soundboard", "Discord soundboard", "Zoom soundboard", "Teams soundboard", "hotkeys", "low latency", "Windows", "Linux"],
+  openGraph: {
+    type: "website",
+    url: "https://audiopad.vercel.app",
+    title: "AudioPad — Free, open-source soundboard for your microphone",
+    description: "AudioPad is a free, lightweight, open-source soundboard. Play audio through your microphone in Discord, Zoom, Teams, and games — with hotkeys and low latency.",
+    images: [
+      {
+        url: "/audiopad-og.png",
+        width: 1200,
+        height: 630,
+        alt: "AudioPad — Free, open-source soundboard",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AudioPad — Free, open-source soundboard for your microphone",
+    description: "AudioPad is a free, lightweight, open-source soundboard. Play audio through your microphone in Discord, Zoom, Teams, and games — with hotkeys and low latency.",
+    images: ["/audiopad-og.png"],
+  },
 };
 
-export default function Home() {
+export default async function Home() {
+  const latestRelease = await fetchLatestRelease();
+  const assets = latestRelease ? filterReleaseAssets(latestRelease) : null;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AudioPad",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": ["Windows", "Linux"],
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "AudioPad is a free, lightweight, open-source soundboard. Play audio through your microphone in Discord, Zoom, Teams, and games — with hotkeys and low latency.",
+    "url": "https://audiopad.vercel.app",
+    "image": "https://audiopad.vercel.app/audiopad-og.png",
+    "author": {
+      "@type": "Organization",
+      "name": "AudioPad Team"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AudioPad"
+    },
+    "softwareVersion": latestRelease ? latestRelease.tag_name.replace('v', '') : "1.0.0",
+    "license": "https://opensource.org/licenses/MIT"
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans pt-3">
-      <Nav />
-      <main className="mt-24">
-        <Hero />
-        <LogoStrip />
-        <Features />
-        <HowItWorks />
-        <Compare />
-        <OpenSource />
-        <Faq />
-        <DownloadCTA />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-background text-foreground font-sans pt-3">
+        <Nav />
+        <main className="mt-12">
+          <Hero release={latestRelease} assets={assets} />
+          <LogoStrip />
+          <Features />
+          <HowItWorks />
+          <Compare />
+          <OpenSource />
+          <Faq />
+          {/* <DownloadCTA release={latestRelease} assets={assets} /> */}
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
