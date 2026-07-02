@@ -58,19 +58,19 @@ const downloads = [
   {
     title: "Logo Package",
     description: "All logo formats (SVG, PNG, JPG) in light and dark variants",
-    size: "2.5 MB",
+    size: "7.38 MB",
     href: "/audiopad-logo-package.zip",
   },
   {
     title: "Screenshots",
     description: "Product screenshots in various resolutions",
-    size: "8.7 MB",
+    size: "213 KB",
     href: "/audiopad-screenshots.zip",
   },
   {
     title: "Brand Guidelines",
     description: "Complete brand style guide PDF",
-    size: "1.2 MB",
+    size: "<1 MB",
     href: "/audiopad-brand-guidelines.pdf",
   },
 ];
@@ -92,7 +92,7 @@ export default function PressPage() {
       />
       <div className="min-h-screen bg-background text-foreground font-sans pt-3">
         <Nav />
-        <main className="relative mt-12 pt-8 pb-20 sm:pt-12 sm:pb-24 md:pt-16 md:pb-28">
+        <main className="relative overflow-hidden mt-12 pt-8 pb-20 sm:pt-12 sm:pb-24 md:pt-16 md:pb-28">
           <div className="pointer-events-none absolute inset-0 -z-10 grid-bg opacity-40" />
           <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-80 w-[500px] rounded-full bg-moss/10 blur-3xl -z-10" />
           <div className="container-narrow relative z-10">
