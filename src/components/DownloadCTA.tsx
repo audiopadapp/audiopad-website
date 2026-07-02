@@ -81,7 +81,7 @@ export default function DownloadCTA({ release, assets }: DownloadCTAProps) {
 
         <p className="mt-7 sm:mt-8 text-center font-mono text-xs text-ink-soft">
           Prefer to build from source?{" "}
-          <a href={release ? release.html_url : "https://github.com"} className="text-foreground underline-offset-4 hover:underline">
+          <a href={release ? release.html_url : "https://github.com/audiopadapp/audiopad"} className="text-foreground underline-offset-4 hover:underline">
             github.com/audiopadapp/audiopad
           </a>
         </p>

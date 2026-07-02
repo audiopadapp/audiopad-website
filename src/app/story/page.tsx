@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     description: "Learn why we built AudioPad — a free, open-source soundboard for everyone tired of paid subscriptions.",
     images: ["/audiopad-og.png"],
   },
+  alternates: {
+    canonical: "/story",
+  },
 };
 
 export default function StoryPage() {
@@ -138,7 +141,7 @@ export default function StoryPage() {
                     <ArrowRight className="h-5 w-5" />
                   </a>
                   <a
-                    href="https://github.com"
+                    href="https://github.com/audiopadapp/audiopad/"
                     className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-surface px-8 py-4 text-base font-medium text-foreground transition-colors hover:bg-surface-2 font-sans"
                   >
                     <Heart className="h-5 w-5 text-moss" />

@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
 import { Download, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Press & Brand Kit",
@@ -20,6 +21,9 @@ export const metadata: Metadata = {
     title: "Press & Brand Kit — AudioPad",
     description: "Press assets, brand guidelines, logos, and information about AudioPad — the free, open-source soundboard.",
     images: ["/audiopad-og.png"],
+  },
+  alternates: {
+    canonical: "/press",
   },
 };
 
@@ -55,16 +59,19 @@ const downloads = [
     title: "Logo Package",
     description: "All logo formats (SVG, PNG, JPG) in light and dark variants",
     size: "2.5 MB",
+    href: "/audiopad-logo-package.zip",
   },
   {
     title: "Screenshots",
     description: "Product screenshots in various resolutions",
     size: "8.7 MB",
+    href: "/audiopad-screenshots.zip",
   },
   {
     title: "Brand Guidelines",
     description: "Complete brand style guide PDF",
     size: "1.2 MB",
+    href: "/audiopad-brand-guidelines.pdf",
   },
 ];
 
@@ -125,16 +132,16 @@ export default function PressPage() {
               <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div className="rounded-xl border border-border bg-surface p-8 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="h-24 w-24 mx-auto flex items-center justify-center rounded-xl bg-background">
+                    <div className="p-5 mx-auto flex items-center justify-center rounded-xl bg-background">
                       <Logo />
                     </div>
                     <p className="mt-4 text-sm text-ink-soft font-sans">Light background</p>
                   </div>
                 </div>
-                <div className="rounded-xl border border-border bg-foreground p-8 flex items-center justify-center">
+                <div className="rounded-xl border border-border bg-surface p-8 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="h-24 w-24 mx-auto flex items-center justify-center rounded-xl bg-background">
-                      <Logo />
+                    <div className="p-5 mx-auto flex items-center justify-center rounded-xl bg-foreground">
+                      <Logo inverse />
                     </div>
                     <p className="mt-4 text-sm text-ink-soft font-sans">Dark background</p>
                   </div>
@@ -172,7 +179,8 @@ export default function PressPage() {
                 {downloads.map((item) => (
                   <a
                     key={item.title}
-                    href="#"
+                    href={item.href}
+                    download
                     className="group flex flex-col items-start gap-4 rounded-xl border border-border bg-background p-6 transition-all hover:-translate-y-0.5 hover:border-moss/40 hover:bg-surface"
                   >
                     <div className="flex h-10 w-10 items-center justify-center rounded-md bg-accent text-moss">
@@ -205,7 +213,7 @@ export default function PressPage() {
                 For press inquiries, please reach out to us on GitHub or through our project repository.
               </p>
               <a
-                href="https://github.com"
+                href="https://github.com/audiopadapp/audiopad/"
                 className="mt-4 inline-flex items-center gap-2 rounded-md border border-border bg-surface px-5 py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface-2 font-sans"
               >
                 Visit GitHub <ExternalLink className="h-4 w-4" />

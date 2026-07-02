@@ -1,6 +1,6 @@
 # AudioPad - LLM Access Information
 # Website: https://audiopad.vercel.app
-# GitHub: https://github.com/echo-app/echo
+# GitHub: https://github.com/audiopadapp/audiopad/
 
 ## What is AudioPad?
 AudioPad is a free, open-source soundboard for Windows and Linux that plays audio files through your microphone with low latency, hotkeys, and no telemetry or accounts.

@@ -1,4 +1,3 @@
-import { Check, Minus } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import Cell from "./Cell"; // Assuming Cell is also extracted
 

@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@audiopad",
-    creator: "@audiopad",
+    site: "@pyziiit",
+    creator: "@pyziiit",
     title: "AudioPad — Free, open-source soundboard for your microphone",
     description: "AudioPad is a free, lightweight, open-source soundboard. Play audio through your microphone in Discord, Zoom, Teams, and games — with hotkeys and low latency.",
     images: ["/audiopad-og.png"],
@@ -61,6 +61,12 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-US": "/",
     },
   },
 };
@@ -84,7 +90,7 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full" suppressHydrationWarning>
-        <TooltipProvider>{children}</TooltipProvider>
+        <TooltipProvider delayDuration={150}>{children}</TooltipProvider>
       </body>
     </html>
   );

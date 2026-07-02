@@ -5,7 +5,7 @@ import { CheckCircle2, XCircle, Download } from "lucide-react";
 import { Github } from "@/components/icons";
 
 export const metadata: Metadata = {
-  title: "Pricing (this won't take long)",
+  title: "Pricing",
   description:
     "AudioPad is 100% free forever. No subscriptions, no paywalls, no tiers. Just a professional-grade soundboard.",
   keywords: [
@@ -28,6 +28,9 @@ export const metadata: Metadata = {
     description:
       "AudioPad is 100% free forever. No subscriptions, no paywalls, no tiers. Just a professional-grade soundboard.",
     images: ["/audiopad-og.png"],
+  },
+  alternates: {
+    canonical: "/pricing",
   },
 };
 
@@ -130,7 +133,7 @@ export default function PricingPage() {
                     Grab AudioPad
                   </a>
                   <a
-                    href="https://github.com"
+                    href="https://github.com/audiopadapp/audiopad/"
                     className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-surface px-8 py-4 text-base font-medium text-foreground transition-colors hover:bg-surface-2 font-sans"
                   >
                     <Github className="h-5 w-5" />

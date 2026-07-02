@@ -20,6 +20,13 @@ interface GitHubRelease {
   html_url: string;
 }
 
+
+type GithubRepoResponse = {
+  stargazers_count: number;
+}
+
+const GITHUB_REPO_API = "https://api.github.com/repos/audiopadapp/audiopad";
+
 // Helper to format file size
 export function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 B';
@@ -85,4 +92,30 @@ export function filterReleaseAssets(release: GitHubRelease) {
       appImage: linuxAppImageAsset,
     },
   };
+}
+
+
+
+
+export async function getGithubStars(): Promise<number> {
+  try {
+    console.log("Fetching GitHub stars...");
+    const response = await fetch(GITHUB_REPO_API, {
+      next: {
+        revalidate: 3600,
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Github API returned ${response.status}`
+      );
+    }
+
+    const repo: GithubRepoResponse = await response.json()
+    return repo.stargazers_count;
+  } catch (error) {
+    console.error("Failed to fetch Github stars", error);
+    return 0;
+  }
 }

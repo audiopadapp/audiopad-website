@@ -1,12 +1,11 @@
-import Link from "next/link";
-
 type LogoProps = {
   className?: string;
   size?: "sm" | "md" | "lg" | "xl" | "2xl";
   monogram?: boolean;
+  inverse?: boolean;
 };
 
-export default function Logo({ className = "", size = "md", monogram = false }: LogoProps) {
+export default function Logo({ className = "", size = "md", monogram = false, inverse = false }: LogoProps) {
   const sizes = {
     sm: { icon: "w-5 h-5", text: "text-lg" },
     md: { icon: "w-6 h-6", text: "text-[1.35rem]" },
@@ -18,7 +17,7 @@ export default function Logo({ className = "", size = "md", monogram = false }: 
   const currentSize = sizes[size];
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div className={`flex items-center gap-2 ${className} ${inverse ? "text-white" : ""}`}>
       <svg
         width="100%"
         height="100%"

@@ -1,7 +1,7 @@
 /* TEAM */
 	AudioPad Team
 	Site: https://audiopad.vercel.app
-	GitHub: https://github.com/echo-app/echo
+	GitHub: https://github.com/audiopadapp/audiopad/
 
 /* SOFTWARE */
 	AudioPad - Free, open-source soundboard

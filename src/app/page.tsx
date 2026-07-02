@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import LogoStrip from "@/components/LogoStrip";
@@ -35,6 +34,9 @@ export const metadata: Metadata = {
     title: "AudioPad — Free, open-source soundboard for your microphone",
     description: "AudioPad is a free, lightweight, open-source soundboard. Play audio through your microphone in Discord, Zoom, Teams, and games — with hotkeys and low latency.",
     images: ["/audiopad-og.png"],
+  },
+  alternates: {
+    canonical: "/",
   },
 };
 

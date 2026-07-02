@@ -12,7 +12,7 @@ import { DownloadIcon } from "lucide-react";
 
 
 export const metadata: Metadata = {
-  title: "Download AudioPad",
+  title: "Download",
   description: "Download AudioPad for Windows and Linux — free, open-source soundboard.",
   keywords: ["download soundboard", "AudioPad download", "free soundboard download", "Windows soundboard", "Linux soundboard"],
   openGraph: {
@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     title: "Download AudioPad",
     description: "Download AudioPad for Windows and Linux — free, open-source soundboard.",
     images: ["/audiopad-og.png"],
+  },
+  alternates: {
+    canonical: "/download",
   },
 };
 
