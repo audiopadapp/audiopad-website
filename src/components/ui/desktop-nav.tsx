@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "../Logo";
+import PatreonButton from "../PatreonButton";
 
 import GithubStars from "./github-stars";
 import DownloadButton from "./download-button";
@@ -31,6 +32,7 @@ export default function DesktopNav() {
       </nav>
 
       <div className="flex items-center gap-2">
+        <PatreonButton variant="minimal" />
         <GithubStars />
         <DownloadButton />
       </div>

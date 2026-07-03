@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { Heart, Gamepad2, Mic as Microphone, DollarSign, Lock, CheckCircle2, ArrowRight } from "lucide-react";
+import PatreonButton from "@/components/PatreonButton";
 
 export const metadata: Metadata = {
   title: "Our Story",
@@ -59,75 +60,75 @@ export default function StoryPage() {
             <div className="mx-auto max-w-3xl">
               <section className="mb-16">
                 <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2 text-xs text-ink-soft font-mono mb-8">
-                  <Gamepad2 className="h-3 w-3 text-moss" />
-                  <span>True story</span>
+                  <Heart className="h-3 w-3 fill-pink-500 text-pink-500" />
+                  <span>Straight from the heart</span>
                 </div>
                 
                 <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-tight tracking-tight text-foreground mb-8">
-                  I was sick of paying for meme sounds.
+                  Bro, I was SICK of paying for meme sounds.
                 </h1>
                 
                 <article className="space-y-6 text-lg sm:text-xl leading-relaxed text-ink-soft font-sans">
                   <p>
-                    Picture this: you&apos;re 3 hours deep into a Valorant queue, your squad is losing 11-3, and you need to drop the perfect <span className="font-bold text-foreground">Mia Khalifa sound bite</span> to turn the mood around.
+                    Let&apos;s be fr fr: you&apos;re 3 hours deep in a sweaty Valorant queue, your squad&apos;s getting clapped 11-3, and you NEED to drop the most unhinged <span className="font-bold text-foreground">Mia Khalifa sound bite</span> to save the vibe. Like, STAT.
                   </p>
 
                   <p className="flex gap-4 items-start">
                     <DollarSign className="h-8 w-8 text-red-500 flex-shrink-0 mt-1" />
                     <span>
-                      But every single soundboard app out there is trying to nickel and dime you. <span className="font-bold text-foreground">$9.99 a month?</span> For a glorified MP3 player? Get the hell outta here.
+                      But every soundboard app out here is on some straight-up clown shit. <span className="font-bold text-foreground">$9.99 a month???</span> For what? A fancy MP3 player? Bro, that&apos;s wild. Get TF outta here with that.
                     </span>
                   </p>
 
                   <p>
-                    And don&apos;t even get me started on the "free" versions that lock half the features behind a paywall, or spam you with ads in the middle of your ranked game.
+                    And don&apos;t even get me started on the "free" ones that lock half the good shit behind a paywall, or spam you with ads mid-ranked game. Like, bro, I&apos;m trying to clutch a 1v5, not listen to a Raid Shadow Legends ad.
                   </p>
 
                   <p className="flex gap-4 items-start">
                     <Lock className="h-8 w-8 text-moss flex-shrink-0 mt-1" />
                     <span>
-                      No telemetry. No accounts. No cloud. Just a simple program that does exactly one thing: <span className="font-bold text-foreground">plays sounds through your mic</span>. That&apos;s all we wanted.
+                      No weird tracking. No accounts. No sketchy cloud shit. Just a simple ass program that does EXACTLY what you want: <span className="font-bold text-foreground">blasts funny sounds through your mic</span>. That&apos;s literally all we wanted. Is that too much to ask?
                     </span>
                   </p>
 
                   <p>
-                    So we built it. For us. For you. For everyone who just wants to meme on their friends without pulling out a credit card.
+                    So we made that shit. For me. For you. For us. For everyone who just wants to be chaotic and meme on their friends without pulling out a credit card. No cap.
                   </p>
 
                   <div className="my-12 p-6 sm:p-8 rounded-2xl border border-border bg-gradient-to-br from-moss/10 to-accent">
                     <h2 className="font-serif text-2xl sm:text-3xl text-foreground mb-4">
-                      The promise (we won&apos;t break this):
+                      The vibe (we&apos;re keeping this 100):
                     </h2>
                     <ul className="space-y-3">
                       <li className="flex items-center gap-3 text-foreground">
                         <CheckCircle2 className="h-6 w-6 text-moss flex-shrink-0" />
-                        <span className="font-bold">Forever free</span>
+                        <span className="font-bold">Forever free, no cap</span>
                       </li>
                       <li className="flex items-center gap-3 text-foreground">
                         <CheckCircle2 className="h-6 w-6 text-moss flex-shrink-0" />
-                        <span className="font-bold">No subscriptions, no paywalls</span>
+                        <span className="font-bold">No subscriptions, no paywalls, no bullshit</span>
                       </li>
                       <li className="flex items-center gap-3 text-foreground">
                         <CheckCircle2 className="h-6 w-6 text-moss flex-shrink-0" />
-                        <span className="font-bold">Open source</span>
+                        <span className="font-bold">Open source AF</span>
                       </li>
                       <li className="flex items-center gap-3 text-foreground">
                         <CheckCircle2 className="h-6 w-6 text-moss flex-shrink-0" />
-                        <span className="font-bold">No telemetry, no tracking</span>
+                        <span className="font-bold">No tracking, no spying, no creeps</span>
                       </li>
                     </ul>
                   </div>
 
                   <p>
-                    This isn&apos;t a startup. There&apos;s no monetization plan. There&apos;s no venture capital bros breathing down our neck. Just a couple of nerds who got tired of paying for something that should&apos;ve been free in the first place.
+                    This ain&apos;t no startup. We don&apos;t got VC bros breathing down our neck. We don&apos;t even have a monetization plan lmaooo. Just a couple of chaotic nerds who got sick of paying for something that should&apos;ve been free from the jump.
                   </p>
 
                   <p>
-                    Hope it makes you laugh as hard as it makes us.
+                    Hope it makes you laugh until you snort. We know it does for us.
                   </p>
 
                   <p className="text-foreground font-bold mt-8">
-                    — The AudioPad gang 🎮
+                    — The AudioPad squad 🎮🔥
                   </p>
                 </article>
 
@@ -140,6 +141,7 @@ export default function StoryPage() {
                     Download for Free
                     <ArrowRight className="h-5 w-5" />
                   </a>
+                  <PatreonButton />
                   <a
                     href="https://github.com/audiopadapp/audiopad/"
                     className="inline-flex items-center justify-center gap-2 rounded-md border border-border bg-surface px-8 py-4 text-base font-medium text-foreground transition-colors hover:bg-surface-2 font-sans"

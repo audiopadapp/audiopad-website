@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import DownloadPlatforms from "@/components/DownloadPlatforms";
+import PatreonButton from "@/components/PatreonButton";
 import { 
   fetchLatestRelease, 
   fetchAllReleases, 
@@ -85,6 +86,15 @@ export default async function DownloadPage() {
           <section className="p-12 bg-surface/40">
             <div className="container-narrow py-16 sm:py-20 md:py-24">
               <div className="mx-auto max-w-2xl text-center">
+                <div className="rounded-xl border border-border bg-background p-6 sm:p-8 mb-8">
+                  <h2 className="font-serif text-xl sm:text-2xl tracking-tight text-foreground">Support the Project</h2>
+                  <p className="mt-3 text-sm text-ink-soft font-sans">
+                    Help keep AudioPad free and open source by supporting us on Patreon!
+                  </p>
+                  <div className="mt-4">
+                    <PatreonButton />
+                  </div>
+                </div>
                 <div className="rounded-xl border border-border bg-background p-6 sm:p-8">
                   <h2 className="font-serif text-xl sm:text-2xl tracking-tight text-foreground">Build from source</h2>
                   <p className="mt-3 text-sm text-ink-soft font-sans">

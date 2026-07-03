@@ -10,6 +10,7 @@ const links = [
     { href: "/pricing", label: "Pricing" },
     { href: "/story", label: "Our Story" },
     { href: "/press", label: "Press" },
+    { href: "https://www.patreon.com/cw/audiopad_oss", label: "Support on Patreon", external: true },
 ];
 
 export default function MobileMenu() {
@@ -52,16 +53,32 @@ export default function MobileMenu() {
                 }`}
             >
                 <div className="rounded-xl border border-border/70 bg-background/90 backdrop-blur-sm p-3 space-y-1">
-                    {links.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            onClick={() => setOpen(false)}
-                            className="block px-4 py-3 rounded-lg text-sm font-medium text-foreground hover:bg-surface transition-colors"
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
+                    {links.map((link) => {
+                        if (link.external) {
+                            return (
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => setOpen(false)}
+                                    className="block px-4 py-3 rounded-lg text-sm font-medium text-foreground hover:bg-surface transition-colors"
+                                >
+                                    {link.label}
+                                </a>
+                            );
+                        }
+                        return (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                onClick={() => setOpen(false)}
+                                className="block px-4 py-3 rounded-lg text-sm font-medium text-foreground hover:bg-surface transition-colors"
+                            >
+                                {link.label}
+                            </Link>
+                        );
+                    })}
                     <div className="pt-2">
                         <Link
                             href="/download"

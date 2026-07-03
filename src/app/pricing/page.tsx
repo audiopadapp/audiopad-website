@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { CheckCircle2, XCircle, Download } from "lucide-react";
 import { Github } from "@/components/icons";
+import PatreonButton from "@/components/PatreonButton";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -225,11 +226,21 @@ export default function PricingPage() {
               <section className="mb-16">
                 <div className="rounded-2xl border border-border bg-gradient-to-br from-moss/10 to-accent p-8 sm:p-12 text-center">
                   <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
-                    Still have questions?
+                    Want to Support Us?
                   </h2>
                   <p className="text-lg text-ink-soft font-sans max-w-2xl mx-auto mb-8">
+                    Even though AudioPad is completely free, you can help us keep this project alive by
+                    supporting us on Patreon! Every little bit helps, and our accountants might not hate this page quite as much.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                    <PatreonButton />
+                  </div>
+                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-foreground mb-4">
+                    Still have questions?
+                  </h3>
+                  <p className="text-base text-ink-soft font-sans max-w-2xl mx-auto mb-6">
                     Check out our story to learn why we built AudioPad, or dive into the source
-                    code to see exactly how it works. Our accountants hate this page.
+                    code to see exactly how it works.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a

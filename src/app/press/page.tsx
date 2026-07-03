@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
+import PatreonButton from "@/components/PatreonButton";
 import { Download, ExternalLink } from "lucide-react";
 import Image from "next/image";
 
@@ -206,19 +207,22 @@ export default function PressPage() {
             </section>
 
             <section className="mt-16 sm:mt-20">
-              <h2 className="font-serif text-2xl sm:text-3xl tracking-tight text-foreground">
-                Contact
-              </h2>
-              <p className="mt-4 text-base text-ink-soft font-sans">
-                For press inquiries, please reach out to us on GitHub or through our project repository.
-              </p>
-              <a
-                href="https://github.com/audiopadapp/audiopad/"
-                className="mt-4 inline-flex items-center gap-2 rounded-md border border-border bg-surface px-5 py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface-2 font-sans"
-              >
-                Visit GitHub <ExternalLink className="h-4 w-4" />
-              </a>
-            </section>
+                <h2 className="font-serif text-2xl sm:text-3xl tracking-tight text-foreground">
+                  Contact
+                </h2>
+                <p className="mt-4 text-base text-ink-soft font-sans">
+                  For press inquiries, please reach out to us on GitHub or through our project repository.
+                </p>
+                <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                  <a
+                    href="https://github.com/audiopadapp/audiopad/"
+                    className="inline-flex items-center gap-2 rounded-md border border-border bg-surface px-5 py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface-2 font-sans"
+                  >
+                    Visit GitHub <ExternalLink className="h-4 w-4" />
+                  </a>
+                  <PatreonButton variant="outline" />
+                </div>
+              </section>
           </div>
         </main>
         <Footer />

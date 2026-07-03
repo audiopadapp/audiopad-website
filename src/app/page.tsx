@@ -10,6 +10,7 @@ import Faq from "@/components/Faq";
 import DownloadCTA from "@/components/DownloadCTA";
 import Footer from "@/components/Footer";
 import { fetchLatestRelease, filterReleaseAssets, formatFileSize } from "@/lib/github";
+import Sponsors from "@/components/Sponsors";
 
 export const metadata: Metadata = {
   title: "AudioPad — Free, open-source soundboard for your microphone",
@@ -85,6 +86,7 @@ export default async function Home() {
           <HowItWorks />
           <Compare />
           <OpenSource />
+          <Sponsors />
           <Faq />
           {/* <DownloadCTA release={latestRelease} assets={assets} /> */}
         </main>

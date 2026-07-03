@@ -1,5 +1,6 @@
-import {  HeartHandshakeIcon } from "lucide-react";
+import { HeartHandshakeIcon } from "lucide-react";
 import { Github } from "@/components/icons";
+import PatreonButton from "./PatreonButton";
 
 export default function OpenSource() {
   return (
@@ -12,16 +13,11 @@ export default function OpenSource() {
               Built in the open, by people who use it.
             </h2>
             <p className="mt-4 sm:mt-5 max-w-md text-base leading-relaxed text-ink-soft font-sans">
-              Echo is MIT licensed. Read the source, audit what it does on your machine, file an
-              issue, or send a pull request. No paywalls hiding behind a contributor agreement.
+              AudioPad is free and open source. Support the project on Patreon to keep development going!
             </p>
             <div className="mt-6 sm:mt-7 flex flex-wrap gap-3">
-              <a
-                href="https://github.com/audiopadapp/audiopad/"
-                className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-2 font-sans"
-              >
-                <Github className="h-4 w-4" /> Star on GitHub
-              </a>
+              <PatreonButton />
+              
               <a
                 href="https://github.com/audiopadapp/audiopad/"
                 className="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-foreground font-sans"

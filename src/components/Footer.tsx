@@ -31,11 +31,12 @@ export default function Footer() {
             />
 
             <FooterCol
-              title="Project"
-              links={[
-                ["GitHub", "https://github.com/audiopadapp/audiopad"],
-              ]}
-            />
+        title="Project"
+        links={[
+          ["GitHub", "https://github.com/audiopadapp/audiopad"],
+          ["Patreon", "https://www.patreon.com/cw/audiopad_oss"],
+        ]}
+      />
           </div>
         </div>
 
