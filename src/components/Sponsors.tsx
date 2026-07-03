@@ -64,7 +64,7 @@ const Tooltip = ({ children, text }: { children: React.ReactNode; text: string }
 const PlaceholderButton = () => (
   <Tooltip text="Become a Sponsor">
     <a
-      href="https://www.patreon.com/cw/audiopad_oss"
+      href="https://www.patreon.com/cw/audiopad_oss/membership"
       target="_blank"
       rel="noopener noreferrer"
       className="group flex items-center justify-center p-2 transition-all"
