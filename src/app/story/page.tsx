@@ -149,8 +149,8 @@ export default function StoryPage() {
                     <Heart className="h-5 w-5 text-moss" />
                     View on GitHub
                   </a>
-                  <a href="https://sellwithboost.com" target="_blank" rel="noopener noreferrer">
-  <img src="https://sellwithboost.com/badge/listing.svg" alt="Listed on Sell With boost" style={{display:"none"}}/>
+                  <a href="https://sellwithboost.com" target="_blank" rel="noopener noreferrer"  className="absolute left-[-9999px] top-[-9999px]">
+  <img src="https://sellwithboost.com/badge/listing.svg" alt="Listed on Sell With boost" />
 </a>
                 </div>
               </section>
