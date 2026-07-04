@@ -28,19 +28,19 @@ async function verifySignature(request: NextRequest, body: string): Promise<bool
 
   const expectedSignature = `sha256=${signature}`;
 
-  // Compare signatures using timing-safe comparison
-  try {
-    const expectedSignatureBytes = encoder.encode(expectedSignature);
-    const actualSignatureBytes = encoder.encode(signatureHeader);
-
-    if (expectedSignatureBytes.length !== actualSignatureBytes.length) {
+  // Timing-safe comparison (to avoid timing attacks)
+  function timingSafeEqual(a: string, b: string): boolean {
+    if (a.length !== b.length) {
       return false;
     }
-
-    return crypto.subtle.timingSafeEqual(expectedSignatureBytes, actualSignatureBytes);
-  } catch {
-    return false;
+    let result = 0;
+    for (let i = 0; i < a.length; i++) {
+      result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+    }
+    return result === 0;
   }
+
+  return timingSafeEqual(expectedSignature, signatureHeader);
 }
 
 export async function POST(request: NextRequest) {
