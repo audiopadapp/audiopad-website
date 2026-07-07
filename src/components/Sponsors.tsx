@@ -1,4 +1,5 @@
 import { Plus, Trophy, Heart, HeartHandshake, Star, Zap } from "lucide-react";
+import Image from "next/image";
 
 type Sponsor = {
   name: string;
@@ -86,10 +87,13 @@ const SponsorLogo = ({ sponsor, logoSize }: { sponsor: Sponsor; logoSize: string
       className="group flex items-center justify-center transition-all"
     >
       {sponsor.logoUrl ? (
-        <img
+        <Image
           src={sponsor.logoUrl}
           alt={sponsor.name}
-          className={`${logoSize} object-contain group-hover:scale-110`}
+          width={0}
+          height={0}
+          sizes="100vw"
+          className={`${logoSize} object-contain group-hover:scale-110 w-auto`}
         />
       ) : (
         <div className="flex items-center justify-center">

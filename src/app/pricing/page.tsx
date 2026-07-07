@@ -88,7 +88,7 @@ export default function PricingPage() {
       name: "AudioPad",
     },
     softwareVersion: "1.0.0",
-    license: "https://opensource.org/licenses/MIT",
+    license: "https://www.gnu.org/licenses/gpl-3.0.html",
   };
 
   return (

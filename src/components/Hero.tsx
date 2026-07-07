@@ -1,4 +1,3 @@
-// components/hero.tsx — Server Component (no "use client")
 import { Github } from "@/components/icons";
 import DownloadButton from "./ui/download-button";
 import { Button } from "./ui/button";
@@ -61,7 +60,7 @@ export default function Hero({ release, assets }: HeroProps) {
 
         <div className="relative mx-auto mt-12 sm:mt-16 max-w-5xl">
           <div className="absolute -inset-x-8 -bottom-8 -top-4 -z-10 rounded-3xl bg-surface-2/60 blur-2xl" />
-          <VideoPlayer src="/audiopad.mp4" />
+          <VideoPlayer src="/audiopad.mp4" srcWebm="/audiopad.webm" />
         </div>
       </div>
     </section>

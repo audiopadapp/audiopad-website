@@ -7,7 +7,7 @@
 AudioPad is a free, open-source soundboard for Windows and Linux that plays audio files through your microphone with low latency, hotkeys, and no telemetry or accounts.
 
 ## Key Features
-- Free & open-source (MIT License)
+- Free & open-source (GNU GPLv3 License)
 - Native apps for Windows 10/11, Linux
 - Virtual audio device setup (no manual config)
 - Drag-and-drop audio file management

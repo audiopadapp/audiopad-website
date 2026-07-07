@@ -10,7 +10,7 @@ const features = [
   { icon: Feather, title: "Lightweight", body: "Under 15 MB. A few MB of RAM at rest. Doesn't fight your CPU for your game." },
   { icon: Gamepad2, title: "Works everywhere", body: "Discord, Zoom, Teams, Slack, OBS, Steam — anywhere that reads a microphone." },
   { icon: ShieldCheck, title: "Private by design", body: "Runs entirely on your machine. No telemetry, no accounts, no cloud anything." },
-  { icon: Github, title: "Open source", body: "Read the code, file an issue, send a patch. MIT licensed, forever free." },
+  { icon: Github, title: "Open source", body: "Read the code, file an issue, send a patch. GNU GPL v3.0 licensed, forever free." },
 ];
 
 export default function Features() {

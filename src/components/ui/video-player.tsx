@@ -3,7 +3,7 @@
 import { Volume2, VolumeX, Play, Pause } from "lucide-react";
 import { useState, useRef } from "react";
 
-export default function VideoPlayer({ src }: { src: string }) {
+export default function VideoPlayer({ src, srcWebm }: { src: string; srcWebm: string }) {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -26,14 +26,20 @@ export default function VideoPlayer({ src }: { src: string }) {
     <div className="hairline overflow-hidden rounded-xl bg-white shadow-[0_30px_80px_-40px_rgba(60,50,30,0.35)] relative">
       <video
         ref={videoRef}
-        src={src}
-        poster="/audiopad-og.png"
+        poster="/audiopad-poster.webp"
         autoPlay
         loop
         muted={isMuted}
         playsInline
+        preload="metadata"
+        width={1280}
+        height={720}
         className="w-full h-auto"
-      />
+      >
+        <source src={srcWebm} type="video/webm" />
+        <source src={src} type="video/mp4" />
+      </video>
+
       <div className="absolute bottom-4 right-4 flex items-center gap-2">
         <button
           onClick={togglePlay}

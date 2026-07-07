@@ -5,7 +5,7 @@
 
 /* SOFTWARE */
 	AudioPad - Free, open-source soundboard
-	License: MIT License
+	License: GNU GPLv3 License
 
 /* TECHNOLOGIES */
 	Next.js
