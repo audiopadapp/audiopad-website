@@ -68,6 +68,7 @@ const PlaceholderButton = () => (
       target="_blank"
       rel="noopener noreferrer"
       className="group flex items-center justify-center p-2 transition-all"
+      aria-label="Become a sponsor on Patreon"
     >
       <div className="flex items-center justify-center h-12 w-12 rounded-full border-2 border-dashed border-border hover:border-moss transition-colors">
         <Plus className="h-5 w-5 text-ink-soft group-hover:text-moss transition-colors" />
