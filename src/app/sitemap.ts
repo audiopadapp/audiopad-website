@@ -4,44 +4,62 @@ import { SITE_URL, getChangelogEntries } from "@/lib/changelog";
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries = getChangelogEntries();
 
+  const baseUrl = SITE_URL.replace(/\/$/, "");
+
   return [
     {
-      url: 'https://audiopad.vercel.app',
+      url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 1,
+      priority: 1.0,
     },
     {
-      url: 'https://audiopad.vercel.app/download',
+      url: `${baseUrl}/download`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://audiopad.vercel.app/pricing',
+      url: `${baseUrl}/changelog`,
+      lastModified: entries[0]?.date ?? new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/pricing`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: 'https://audiopad.vercel.app/story',
+      url: `${baseUrl}/contribute`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+    {
+      url: `${baseUrl}/contribute/changelog`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: 'https://audiopad.vercel.app/press',
+      url: `${baseUrl}/story`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: `${SITE_URL}/changelog`,
-      lastModified: entries[0]?.date ?? new Date(),
+      url: `${baseUrl}/press`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
     },
     ...entries.map((entry) => ({
-      url: `${SITE_URL}/changelog/${entry.slug}`,
+      url: `${baseUrl}/changelog/${entry.slug}`,
       lastModified: entry.date,
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
     })),
   ];
 }

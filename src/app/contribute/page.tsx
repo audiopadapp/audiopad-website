@@ -1,264 +1,286 @@
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  ArrowUpRight,
-  Code2,
-  FileText,
-  CatIcon as Github,
-  Globe2,
-  MessageSquare,
+  ArrowRight,
+  ExternalLink,
+  FileCode2,
+  Globe,
+  Heart,
   Monitor,
+  Sparkles,
   Terminal,
 } from "lucide-react";
+import { Github } from "@/components/icons";
+import { Badge } from "@/components/ui/badge";
 
-const contributions = [
+export const metadata: Metadata = {
+  title: "Contribute — AudioPad",
+  description:
+    "AudioPad is 100% free and open source. Learn how to contribute to the desktop application, website, and changelog.",
+  alternates: {
+    canonical: "/contribute",
+  },
+};
+
+const projects = [
   {
     title: "AudioPad App",
-    eyebrow: "THE SOFTWARE",
+    category: "Desktop Application",
     description:
-      "Contribute to the actual AudioPad desktop application. Work on the audio engine, native integrations, UI, features, performance, and bug fixes.",
-    technologies: ["C++", "WebView", "CMake"],
-    platforms: ["Windows", "Linux"],
+      "Contribute to the core desktop soundboard for Windows and Linux. Work on audio routing, DSP, UI, hotkeys, and performance.",
     icon: Monitor,
-    href: "https://github.com/audiopadapp/audiopad",
-    primary: true,
+    tags: ["C++", "WebView", "CMake", "Windows", "Linux"],
+    primaryAction: {
+      label: "View repository",
+      href: "https://github.com/audiopadapp/audiopad",
+      external: true,
+      icon: Github,
+    },
+    secondaryAction: {
+      label: "Read setup guide",
+      href: "https://github.com/audiopadapp/audiopad/blob/main/CONTRIBUTING.md",
+      external: true,
+    },
   },
   {
     title: "AudioPad Website",
-    eyebrow: "THE WEBSITE",
+    category: "Web & Documentation",
     description:
-      "Improve the website, documentation, changelog, content, design, and developer experience around AudioPad.",
-    technologies: ["Next.js", "TypeScript"],
-    platforms: ["Web", "Documentation"],
-    icon: Globe2,
-    href: "https://github.com/audiopadapp/audiopad-website",
-    primary: false,
+      "Help improve the official website, landing pages, marketing assets, SEO, accessibility, and documentation.",
+    icon: Globe,
+    tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+    primaryAction: {
+      label: "View repository",
+      href: "https://github.com/audiopadapp/audiopad-website",
+      external: true,
+      icon: Github,
+    },
+    secondaryAction: {
+      label: "Browse issues",
+      href: "https://github.com/audiopadapp/audiopad-website/issues",
+      external: true,
+    },
+  },
+  {
+    title: "Changelog Guide",
+    category: "Release Notes",
+    description:
+      "Learn how to author and publish changelog entries for new releases. Step-by-step guidance on frontmatter, images, and MDX rules.",
+    icon: FileCode2,
+    tags: ["MDX", "Authoring", "Releases"],
+    featured: true,
+    primaryAction: {
+      label: "Read changelog guide",
+      href: "/contribute/changelog",
+      external: false,
+      icon: FileCode2,
+    },
+    secondaryAction: {
+      label: "View all releases",
+      href: "/changelog",
+      external: false,
+    },
   },
 ];
 
 const otherWays = [
   {
-    icon: MessageSquare,
     title: "Report a bug",
-    description: "Found something broken? Let us know on GitHub.",
+    description:
+      "Found an issue or audio glitch? Open an issue on GitHub with reproduction details.",
+    icon: Terminal,
     href: "https://github.com/audiopadapp/audiopad/issues",
+    action: "Open GitHub issue",
   },
   {
-    icon: Code2,
     title: "Suggest an idea",
-    description: "Have an idea that could make AudioPad better?",
+    description:
+      "Have ideas for new features, integrations, or workflows? Join discussions with the community.",
+    icon: Sparkles,
     href: "https://github.com/audiopadapp/audiopad/discussions",
+    action: "Join discussion",
   },
   {
-    icon: FileText,
-    title: "Improve documentation",
-    description: "Help make AudioPad easier to understand and use.",
-    href: "https://github.com/audiopadapp/audiopad-website",
+    title: "Support on Patreon",
+    description:
+      "Support ongoing development, domain hosting, code signing certificates, and server costs.",
+    icon: Heart,
+    href: "https://www.patreon.com/cw/audiopad_oss",
+    action: "Become a supporter",
   },
 ];
 
 export default function ContributePage() {
   return (
-    <main className="min-h-screen bg-[#f4f3ef] text-[#171816]">
+    <main className="min-h-screen">
       {/* Hero */}
-      <section className="border-b border-black/8">
-        <div className="mx-auto max-w-7xl px-6 pb-20 pt-28 sm:px-8 lg:px-12 lg:pb-28 lg:pt-36">
-          <div className="max-w-4xl">
-            <div className="mb-7 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.18em] text-black/45">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#4f9f78]" />
-              Open source
-            </div>
-
-            <h1 className="max-w-4xl text-5xl font-semibold tracking-[-0.055em] sm:text-6xl lg:text-7xl">
-              Build AudioPad
-              <br />
-              with us.
-            </h1>
-
-            <p className="mt-7 max-w-2xl text-base leading-7 text-black/55 sm:text-lg">
-              AudioPad is open source. Whether you want to improve the
-              desktop application or help build the website, choose the
-              project you want to contribute to.
-            </p>
-          </div>
+      <section className="border-b">
+        <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
+          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground mb-3">
+            Open Source
+          </p>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+            Contribute to AudioPad
+          </h1>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            AudioPad is 100% free and open source. From writing code and documenting
+            releases to reporting bugs and suggesting ideas, all contributions are
+            welcome.
+          </p>
         </div>
       </section>
 
-      {/* Contribution paths */}
-      <section className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-12 lg:py-24">
-        <div className="mb-10">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-black/40">
+      {/* Main contribution pathways */}
+      <section className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
             Choose a project
-          </p>
-
-          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
-            What do you want to contribute to?
           </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Select the repository or guide that matches what you want to work on.
+          </p>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-2">
-          {contributions.map((item) => {
-            const Icon = item.icon;
+        <div className="grid gap-6 md:grid-cols-3">
+          {projects.map((project) => {
+            const Icon = project.icon;
+            const ActionIcon = project.primaryAction.icon;
 
             return (
-              <a
-                key={item.title}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex min-h-[420px] flex-col overflow-hidden rounded-2xl border border-black/8 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-black/15 hover:shadow-[0_20px_60px_rgba(0,0,0,0.07)] sm:p-9"
+              <div
+                key={project.title}
+                className="flex flex-col justify-between rounded-xl border bg-card p-5 sm:p-6 transition-colors hover:border-foreground/30 shadow-2xs"
               >
-                {/* subtle accent */}
-                <div
-                  className={`absolute right-0 top-0 h-32 w-32 rounded-full blur-3xl ${
-                    item.primary ? "bg-[#4f9f78]/10" : "bg-black/[0.035]"
-                  }`}
-                />
+                <div>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex size-10 items-center justify-center rounded-lg border bg-muted">
+                      <Icon className="size-5 text-foreground" />
+                    </div>
 
-                <div className="relative flex items-start justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-black/8 bg-[#f7f6f2]">
-                    <Icon className="h-5 w-5 text-black/70" strokeWidth={1.7} />
+                    <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                      {project.category}
+                    </span>
                   </div>
 
-                  <ArrowUpRight
-                    className="h-5 w-5 text-black/30 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-black/70"
-                    strokeWidth={1.7}
-                  />
-                </div>
-
-                <div className="relative mt-auto pt-20">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">
-                    {item.eyebrow}
-                  </p>
-
-                  <h3 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">
-                    {item.title}
+                  <h3 className="mt-5 text-lg font-semibold tracking-tight">
+                    {project.title}
                   </h3>
 
-                  <p className="mt-4 max-w-lg text-sm leading-6 text-black/55">
-                    {item.description}
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {project.description}
                   </p>
 
-                  <div className="mt-7 flex flex-wrap gap-2">
-                    {item.technologies.map((technology) => (
-                      <span
-                        key={technology}
-                        className="rounded-md border border-black/8 bg-[#f7f6f2] px-2.5 py-1.5 text-[11px] font-medium text-black/55"
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className="font-mono text-[10px] font-normal"
                       >
-                        {technology}
-                      </span>
+                        {tag}
+                      </Badge>
                     ))}
-
-                    {item.platforms.map((platform) => (
-                      <span
-                        key={platform}
-                        className="rounded-md border border-black/8 bg-[#f7f6f2] px-2.5 py-1.5 text-[11px] font-medium text-black/55"
-                      >
-                        {platform}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="mt-7 flex items-center gap-2 text-sm font-medium">
-                    <Github className="h-4 w-4" strokeWidth={1.8} />
-                    View repository
-                    <ArrowUpRight
-                      className="h-3.5 w-3.5 text-black/35"
-                      strokeWidth={1.8}
-                    />
                   </div>
                 </div>
-              </a>
+
+                <div className="mt-6 space-y-2 border-t pt-4">
+                  {project.primaryAction.external ? (
+                    <a
+                      href={project.primaryAction.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-foreground text-background hover:bg-foreground/90 inline-flex w-full items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-xs font-medium transition-colors"
+                    >
+                      <ActionIcon className="size-3.5" />
+                      {project.primaryAction.label}
+                      <ExternalLink className="size-3 opacity-70" />
+                    </a>
+                  ) : (
+                    <Link
+                      href={project.primaryAction.href}
+                      className="bg-foreground text-background hover:bg-foreground/90 inline-flex w-full items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-xs font-medium transition-colors"
+                    >
+                      <ActionIcon className="size-3.5" />
+                      {project.primaryAction.label}
+                      <ArrowRight className="size-3.5" />
+                    </Link>
+                  )}
+
+                  {project.secondaryAction.external ? (
+                    <a
+                      href={project.secondaryAction.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:bg-muted text-muted-foreground hover:text-foreground inline-flex w-full items-center justify-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-colors"
+                    >
+                      {project.secondaryAction.label}
+                      <ExternalLink className="size-3 opacity-60" />
+                    </a>
+                  ) : (
+                    <Link
+                      href={project.secondaryAction.href}
+                      className="hover:bg-muted text-muted-foreground hover:text-foreground inline-flex w-full items-center justify-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-colors"
+                    >
+                      {project.secondaryAction.label}
+                      <ArrowRight className="size-3 opacity-60" />
+                    </Link>
+                  )}
+                </div>
+              </div>
             );
           })}
         </div>
       </section>
 
-      {/* App contribution note */}
-      <section className="border-y border-black/8 bg-[#eceae4]">
-        <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 lg:px-12 lg:py-18">
-          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div className="max-w-2xl">
-              <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-black/40">
-                <Terminal className="h-3.5 w-3.5" strokeWidth={1.8} />
-                Working on the app
-              </div>
+      {/* More ways to help */}
+      <section className="border-t bg-muted/30">
+        <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+              More ways to help
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              You don&apos;t have to write code to support the AudioPad project.
+            </p>
+          </div>
 
-              <h2 className="mt-4 text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
-                The software repository has everything you need.
-              </h2>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {otherWays.map((item) => {
+              const Icon = item.icon;
 
-              <p className="mt-4 text-sm leading-6 text-black/55 sm:text-base">
-                The AudioPad repository contains the development setup,
-                build instructions, contribution workflow, code formatting
-                rules, and project structure for working on the desktop app.
-              </p>
-            </div>
+              return (
+                <a
+                  key={item.title}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-xl border bg-card p-5 transition-colors hover:border-foreground/30 shadow-2xs flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex size-9 items-center justify-center rounded-lg border bg-muted">
+                      <Icon className="size-4 text-foreground" />
+                    </div>
 
-            <a
-              href="https://github.com/audiopadapp/audiopad/blob/main/CONTRIBUTING.md"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#171816] px-5 text-sm font-medium text-white transition-colors hover:bg-black"
-            >
-              Read contribution guide
-              <ArrowUpRight className="h-4 w-4" strokeWidth={1.8} />
-            </a>
+                    <h3 className="mt-4 text-base font-semibold tracking-tight">
+                      {item.title}
+                    </h3>
+
+                    <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  <span className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground group-hover:underline">
+                    {item.action}
+                    <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                  </span>
+                </a>
+              );
+            })}
           </div>
         </div>
       </section>
-
-      {/* Other ways to contribute */}
-      <section className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-12 lg:py-24">
-        <div className="mb-10">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-black/40">
-            More ways to help
-          </p>
-
-          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
-            You don't have to write code.
-          </h2>
-        </div>
-
-        <div className="grid divide-y divide-black/8 border-y border-black/8 md:grid-cols-3 md:divide-x md:divide-y-0">
-          {otherWays.map((item) => {
-            const Icon = item.icon;
-
-            return (
-              <a
-                key={item.title}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group px-1 py-7 md:px-7 md:py-3"
-              >
-                <Icon
-                  className="h-5 w-5 text-black/55 transition-colors group-hover:text-[#4f9f78]"
-                  strokeWidth={1.7}
-                />
-
-                <h3 className="mt-5 text-base font-semibold tracking-[-0.02em]">
-                  {item.title}
-                </h3>
-
-                <p className="mt-2 max-w-xs text-sm leading-6 text-black/50">
-                  {item.description}
-                </p>
-
-                <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-black/60">
-                  Get started
-                  <ArrowUpRight
-                    className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    strokeWidth={1.8}
-                  />
-                </span>
-              </a>
-            );
-          })}
-        </div>
-      </section>
-
-    
     </main>
   );
 }

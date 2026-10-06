@@ -4,21 +4,30 @@
 - **GitHub**: https://github.com/audiopadapp/audiopad/
 
 ## What is AudioPad?
-AudioPad is a free, open-source soundboard for Windows and Linux that plays audio files through your microphone with low latency, hotkeys, and no telemetry or accounts.
+AudioPad is a free, open-source soundboard application for Windows and Linux that plays audio files through your microphone with sub-20ms low latency, customizable global hotkeys, and zero telemetry or accounts.
 
 ## Key Features
 - Free & open-source (GNU GPLv3 License)
-- Native apps for Windows 10/11, Linux
-- Virtual audio device setup (no manual config)
-- Drag-and-drop audio file management
-- Global hotkeys for instant playback
-- Low-latency performance
-- No telemetry, no accounts, no cloud
-- Works with Discord, Zoom, Teams, OBS, games, etc.
+- Native packages for Windows 10/11 (.exe) and Linux (.deb, .rpm, .AppImage)
+- Dual output stream routing (headphone monitoring + virtual mic injection)
+- VB-Cable virtual audio device automated onboarding & detection
+- Interactive transport dock with real-time scrubber and playback controls
+- Customizable sound cards with image background art
+- Drag-and-drop audio library management with batch assignment
+- Global hotkeys for instant playback in full-screen games
+- Sub-20ms low-latency C++ audio playback engine
+- Zero telemetry, no user accounts, no cloud sync, no advertisements
+- Seamless integration with Discord, Zoom, Microsoft Teams, OBS, and games
 
 ## Pages to Crawl
 - [Homepage](https://audiopad.vercel.app)
 - [Downloads](https://audiopad.vercel.app/download)
+- [Changelog Hub](https://audiopad.vercel.app/changelog)
+- [Release v1.1.0 (Latest)](https://audiopad.vercel.app/changelog/v1.1.0)
+- [Release v1.0.1](https://audiopad.vercel.app/changelog/v1.0.1)
+- [Release v1.0.0](https://audiopad.vercel.app/changelog/v1.0.0)
+- [Contribute Guide](https://audiopad.vercel.app/contribute)
+- [Changelog Authoring Guide](https://audiopad.vercel.app/contribute/changelog)
 - [Pricing](https://audiopad.vercel.app/pricing)
 - [Our Story](https://audiopad.vercel.app/story)
 - [Press & Brand Kit](https://audiopad.vercel.app/press)
@@ -26,10 +35,14 @@ AudioPad is a free, open-source soundboard for Windows and Linux that plays audi
 ## Structured Data
 - Home: SoftwareApplication schema
 - Download: SoftwareApplication schema
+- Changelog: CollectionPage, ItemList, BreadcrumbList schema
+- Changelog Release Post: BlogPosting, BreadcrumbList schema
+- Contribute: WebPage, HowTo schema
 - Pricing: SoftwareApplication schema
 - Story: Article schema
 - Press: Organization schema
 
 ## Brand Assets
-- [Logo](https://audiopad.vercel.app/app-mockup-white.png)
+- [Logo](https://audiopad.vercel.app/logo-white.png)
 - [OG Image](https://audiopad.vercel.app/audiopad-og.png)
+- [App Mockup](https://audiopad.vercel.app/app-mockup-white.png)
