@@ -12,6 +12,8 @@ const frontmatterSchema = z.object({
   version: z.string(),
   date: z.coerce.date(),
   tags: z.array(z.string()).default([]),
+  image: z.string().optional(),
+  imageAlt: z.string().optional(),
 });
 
 export type ChangelogEntry = z.infer<typeof frontmatterSchema> & {
