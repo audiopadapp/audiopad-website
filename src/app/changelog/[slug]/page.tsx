@@ -4,7 +4,14 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import { ArrowLeft, ArrowRight, CalendarDays } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CalendarDays,
+  ExternalLink,
+  FileCode2,
+  SquarePen,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { changelogMdxComponents } from "@/components/changelog/mdx-components";
@@ -14,6 +21,8 @@ import {
   getChangelogEntries,
   getChangelogEntry,
 } from "@/lib/changelog";
+
+const GITHUB_REPO_URL = "https://github.com/audiopadapp/audiopad-website";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -30,28 +39,45 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!entry) return {};
 
   const url = `${SITE_URL}/changelog/${entry.slug}`;
-  const title = `${entry.version} – ${entry.title}`;
+  const title = `${entry.version} – ${entry.title} | AudioPad Changelog`;
+  const description =
+    entry.description ??
+    `Release notes and update details for AudioPad ${entry.version}: ${entry.title}.`;
+  const imageUrl = entry.image
+    ? `${SITE_URL}${entry.image}`
+    : `${SITE_URL}/audiopad-og.png`;
 
   return {
     title,
-    description: entry.description,
+    description,
+    keywords: [
+      entry.version,
+      `AudioPad ${entry.version}`,
+      ...entry.tags,
+      "AudioPad changelog",
+      "AudioPad release notes",
+      "soundboard updates",
+    ],
     alternates: { canonical: url },
     openGraph: {
       title,
-      description: entry.description,
+      description,
       url,
       type: "article",
       publishedTime: entry.date.toISOString(),
       tags: entry.tags,
-      images: entry.image
-        ? [{ url: `${SITE_URL}${entry.image}`, alt: entry.imageAlt ?? entry.title }]
-        : undefined,
+      images: [
+        {
+          url: imageUrl,
+          alt: entry.imageAlt ?? entry.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description: entry.description,
-      images: entry.image ? [`${SITE_URL}${entry.image}`] : undefined,
+      description,
+      images: [imageUrl],
     },
   };
 }
@@ -67,14 +93,70 @@ export default async function ChangelogEntryPage({ params }: Props) {
   const newer = index > 0 ? all[index - 1] : null;
   const older = index >= 0 && index < all.length - 1 ? all[index + 1] : null;
 
+  const url = `${SITE_URL}/changelog/${entry.slug}`;
+  const imageUrl = entry.image
+    ? `${SITE_URL}${entry.image}`
+    : `${SITE_URL}/audiopad-og.png`;
+  const githubEditUrl = `${GITHUB_REPO_URL}/edit/main/content/changelog/${entry.slug}.mdx`;
+
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: `${entry.version} – ${entry.title}`,
-    description: entry.description,
-    datePublished: entry.date.toISOString(),
-    mainEntityOfPage: `${SITE_URL}/changelog/${entry.slug}`,
-    image: entry.image ? `${SITE_URL}${entry.image}` : undefined,
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${url}#article`,
+        "headline": `${entry.version} – ${entry.title}`,
+        "description": entry.description,
+        "datePublished": entry.date.toISOString(),
+        "dateModified": entry.date.toISOString(),
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": url,
+        },
+        "url": url,
+        "image": imageUrl,
+        "author": {
+          "@type": "Organization",
+          "name": "AudioPad Team",
+          "url": SITE_URL,
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "AudioPad",
+          "url": SITE_URL,
+          "logo": {
+            "@type": "ImageObject",
+            "url": `${SITE_URL}/logo-white.png`,
+          },
+        },
+        "keywords": entry.tags.join(", "),
+        "articleSection": "Changelog",
+        "inLanguage": "en-US",
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL,
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Changelog",
+            "item": `${SITE_URL}/changelog`,
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": entry.version,
+            "item": url,
+          },
+        ],
+      },
+    ],
   };
 
   return (
@@ -87,7 +169,7 @@ export default async function ChangelogEntryPage({ params }: Props) {
       />
 
       <div className="grid gap-12 lg:grid-cols-[14rem_minmax(0,1fr)]">
-        {/* Sidebar: release tracker */}
+        {/* Sidebar: release tracker & contribute */}
         <aside className="hidden lg:block">
           <div className="sticky top-24 space-y-6">
             <Link
@@ -98,62 +180,91 @@ export default async function ChangelogEntryPage({ params }: Props) {
               All releases
             </Link>
 
-            <div>
-              <p className="text-muted-foreground mb-3 text-xs font-medium uppercase tracking-wide">
-                Releases
+            <Separator />
+
+            <div className="space-y-3">
+              <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">
+                Contribute
               </p>
-              <ol className="max-h-[60vh] space-y-0 overflow-y-auto border-l">
-                {all.map((e) => {
-                  const active = e.slug === entry.slug;
-                  return (
-                    <li key={e.slug} className="relative">
-                      <span
-                        className={`ring-background absolute -left-[5px] top-3.5 size-2.5 rounded-full ring-4 ${
-                          active ? "bg-primary" : "bg-border"
-                        }`}
-                      />
-                      <Link
-                        href={`/changelog/${e.slug}`}
-                        aria-current={active ? "page" : undefined}
-                        className={`block py-2 pl-5 text-sm transition-colors ${
-                          active
-                            ? "text-foreground font-medium"
-                            : "text-muted-foreground hover:text-foreground"
-                        }`}
-                      >
-                        <span className="block font-mono">{e.version}</span>
-                        <span className="block text-xs opacity-80">
-                          {formatDate(e.date)}
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ol>
+              <div className="flex flex-col gap-1.5 text-sm">
+                <a
+                  href={githubEditUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted/60 -mx-2 flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors"
+                >
+                  <SquarePen className="size-4" />
+                  <span>Edit this page</span>
+                  <ExternalLink className="text-muted-foreground/60 ml-auto size-3" />
+                </a>
+
+                <Link
+                  href="/contribute/changelog"
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted/60 -mx-2 flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors"
+                >
+                  <FileCode2 className="size-4" />
+                  <span>Changelog guide</span>
+                </Link>
+              </div>
             </div>
           </div>
         </aside>
 
         {/* Main */}
         <article className="min-w-0">
-          <Link
-            href="/changelog"
-            className="text-muted-foreground hover:text-foreground mb-8 inline-flex items-center gap-1.5 text-sm transition-colors lg:hidden"
-          >
-            <ArrowLeft className="size-4" />
-            All releases
-          </Link>
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-3 lg:hidden">
+            <Link
+              href="/changelog"
+              className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-sm transition-colors"
+            >
+              <ArrowLeft className="size-4" />
+              All releases
+            </Link>
+
+            <div className="flex items-center gap-3 text-xs">
+              <a
+                href={githubEditUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 transition-colors"
+              >
+                <SquarePen className="size-3.5" />
+                Edit page
+              </a>
+              <span className="text-muted-foreground/40">•</span>
+              <Link
+                href="/contribute/changelog"
+                className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 transition-colors"
+              >
+                <FileCode2 className="size-3.5" />
+                Guide
+              </Link>
+            </div>
+          </div>
 
           <header className="space-y-5">
-            <div className="flex flex-wrap items-center gap-3">
-              <Badge className="font-mono">{entry.version}</Badge>
-              {index === 0 && <Badge variant="secondary">Latest</Badge>}
-              <span className="text-muted-foreground flex items-center gap-1.5 text-sm">
-                <CalendarDays className="size-4" />
-                <time dateTime={entry.date.toISOString()}>
-                  {formatDate(entry.date)}
-                </time>
-              </span>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge className="font-mono">{entry.version}</Badge>
+                {index === 0 && <Badge variant="secondary">Latest</Badge>}
+                <span className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                  <CalendarDays className="size-4" />
+                  <time dateTime={entry.date.toISOString()}>
+                    {formatDate(entry.date)}
+                  </time>
+                </span>
+              </div>
+
+              <a
+                href={githubEditUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground hover:bg-muted inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors"
+              >
+                <SquarePen className="size-3.5" />
+                <span>Edit page</span>
+                <ExternalLink className="text-muted-foreground/60 size-3" />
+              </a>
             </div>
 
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
@@ -179,12 +290,13 @@ export default async function ChangelogEntryPage({ params }: Props) {
 
           {entry.image && (
             <figure className="mt-10">
-              <div className="bg-muted relative aspect-video overflow-hidden rounded-xl border">
+              <div className="bg-background relative aspect-video overflow-hidden rounded-xl border">
                 <Image
                   src={entry.image}
                   alt={entry.imageAlt ?? entry.title}
                   fill
                   priority
+                  loading="eager"
                   sizes="(min-width: 1024px) 704px, 100vw"
                   className="object-cover"
                 />
@@ -205,6 +317,35 @@ export default async function ChangelogEntryPage({ params }: Props) {
               components={changelogMdxComponents}
               options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
             />
+          </div>
+
+          {/* Contribution box */}
+          <div className="mt-12 flex flex-col gap-4 rounded-xl border bg-muted/30 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="space-y-1">
+              <p className="text-sm font-medium">Found an issue or want to contribute?</p>
+              <p className="text-muted-foreground text-xs sm:text-sm">
+                Suggest edits to this release note on GitHub or read our changelog authoring guide.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <a
+                href={githubEditUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-background hover:bg-muted border-border inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors shadow-2xs"
+              >
+                <SquarePen className="size-3.5" />
+                <span>Edit page on GitHub</span>
+                <ExternalLink className="text-muted-foreground/60 size-3" />
+              </a>
+              <Link
+                href="/contribute/changelog"
+                className="bg-background hover:bg-muted border-border inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors shadow-2xs"
+              >
+                <FileCode2 className="size-3.5" />
+                <span>Changelog guide</span>
+              </Link>
+            </div>
           </div>
 
           {(newer || older) && (

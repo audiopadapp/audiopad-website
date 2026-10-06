@@ -1,0 +1,21 @@
+---
+title: "Audio Routing & Microphone Override Fixes"
+description: "AudioPad 1.0.1 resolves output routing glitches, microphone override conflicts, and updates project community funding."
+version: v1.0.1
+date: 2026-07-05
+tags: [fix, improvement]
+image: /changelog/v1.0.1/v101.jpg
+imageAlt: "AudioPad v1.0.1 release cover"
+---
+
+AudioPad 1.0.1 is a targeted stability patch addressing early user feedback around audio hardware configurations and virtual microphone stream routing.
+
+## Fixed
+
+- **Simultaneous Output Routing**: Resolved a routing conflict where selecting particular output device combinations failed to mirror audio cleanly between headphones and the virtual microphone input.
+- **Microphone Stream Override**: Fixed an issue on Windows where applications holding exclusive microphone locks prevented soundboard clips from injecting into active voice channels.
+- **Device Enumeration**: Improved audio device polling so newly plugged USB headsets and external DACs appear immediately in the settings dropdown without requiring an application restart.
+
+## Community
+
+- **Patreon Support**: Migrated community sponsorship options to [Patreon](https://www.patreon.com/cw/audiopad_oss) for community members who want to support continued open-source development.

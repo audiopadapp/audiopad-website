@@ -1,0 +1,53 @@
+---
+title: "AudioPad 1.1: UI Redesign, Transport Dock & Audio Engine Polish"
+description: "A major update featuring a redesigned desktop theme, an interactive playback dock, sound image backgrounds, VB-Cable onboarding, and audio fixes."
+version: v1.1.0
+date: 2026-10-07
+tags: [feature, improvement, fix, performance]
+image: /changelog/v1.1.0/v110.jpg
+imageAlt: "AudioPad v1.1 redesigned interface"
+---
+
+AudioPad 1.1 is our biggest update yet! This release delivers a fresh modern UI theme, a newly overhauled playback transport dock, custom sound card cover art, a guided virtual audio cable onboarding wizard, and major audio engine stability enhancements.
+
+## Highlights
+
+- **Redesigned Desktop Theme**: A cleaner, refined dark interface with updated window dimensions and modernized header badges.
+- **Interactive Playback Transport Dock**: Real-time scrubber with pointer capture, pause/resume seeking, and instant playback status.
+- **Sound Card Customization**: Right-click context menus, custom image backgrounds for sound cards, and batch file assignment.
+- **VB-Cable Guided Onboarding**: Step-by-step setup screen that automatically detects virtual cable drivers and verifies audio routing.
+- **Volume & Slider Synchronization**: Fully unified master, headphone, and microphone volume controls that stay in sync across the header and settings view.
+- **Lossless Audio Playback**: Resampled audio decoding to eliminate premature MP3 cutoffs and preserve sound tails.
+
+## Added
+
+- **Sound Image Backgrounds**: You can now personalize individual sound cards with custom image covers. Images are persisted and serialized directly to your local library.
+- **Batch Assignment Modal**: Quickly import and assign directories of sound effects at once with automated naming.
+- **Right-Click Context Menu**: Added a native right-click (RMB) context menu on sound tiles for faster access to renaming, hotkey binding, image customization, and deletion.
+- **VB-Cable Setup Screen**: A dedicated virtual audio cable onboarding wizard that checks for driver installation, tests microphone loopback, and provides direct setup instructions.
+- **Single Instance Detection**: AudioPad now alerts you if another instance is already running rather than silently failing or clashing over audio ports.
+- **Global Volume Controls**: Added master volume controls with linked and unlinked modes for headphone monitoring and microphone output.
+
+## Improved
+
+- **Smooth Transport Dock & Seeking**: The bottom transport bar now tracks playback state immediately, features smooth ~100ms progress updates, and supports pointer-captured scrubber dragging.
+- **Audio Resampling**: Decoders are now automatically resampled to match native hardware sample rates, preventing premature cutoff on high-sample-rate USB devices.
+- **Scroll Preservation**: Playing sounds no longer resets or jumps the scroll position of your soundboard library.
+- **Lighter Installer Footprint**: Purged legacy external download dependencies and runtime redistributables, resulting in faster download times and leaner resource usage.
+
+## Fixed
+
+- **Individual Stop Buttons**: Fixed an issue where individual stop buttons on active sound cards failed to interrupt playback streams.
+- **Volume Slider Desync**: Resolved an issue where header volume sliders disappeared or went out of sync with values on the Settings page.
+- **Startup Blank Screen**: Resolved startup race conditions where WebView controller bounds were uninitialized, preventing white-screen startup crashes.
+- **System Tray Stability**: Guarded tray update operations to prevent notification failures from disrupting webview promises.
+- **Seek Buffer Stutters**: Applied pending seeks before decoding PCM frames so seeking paused audio resumes cleanly without stuttering old buffer frames.
+
+## Removed
+
+- **Legacy YouTube Downloader**: Removed the built-in downloader helper (`youtube-dl`/`ffmpeg`) and its background dependencies to keep AudioPad lightweight, compliant, and focused on core soundboard performance.
+
+## Under the Hood
+
+- **CMake & Compiler Modernization**: Updated CMake policies to modern standards (`3.16...3.30`) and eliminated MSVC build warnings across audio, hotkey, and UI modules.
+- **Open-Source Governance**: Added formal `CONTRIBUTING.md`, `SECURITY.md`, and `CODEOWNERS` guidelines to the repository.
