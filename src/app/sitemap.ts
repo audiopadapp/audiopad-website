@@ -1,6 +1,9 @@
 import type { MetadataRoute } from 'next';
+import { SITE_URL, getChangelogEntries } from "@/lib/changelog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const entries = getChangelogEntries();
+
   return [
     {
       url: 'https://audiopad.vercel.app',
@@ -32,5 +35,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    {
+      url: `${SITE_URL}/changelog`,
+      lastModified: entries[0]?.date ?? new Date(),
+    },
+    ...entries.map((entry) => ({
+      url: `${SITE_URL}/changelog/${entry.slug}`,
+      lastModified: entry.date,
+    })),
   ];
 }
