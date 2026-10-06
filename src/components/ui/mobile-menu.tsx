@@ -7,6 +7,8 @@ import { Menu, X } from "lucide-react";
 
 const links = [
     { href: "/", label: "Home" },
+    { href: "/changelog", label: "Changelog" },
+    { href: "/contribute", label: "Contribute" },
     { href: "/pricing", label: "Pricing" },
     { href: "/story", label: "Our Story" },
     { href: "/press", label: "Press" },
@@ -49,7 +51,7 @@ export default function MobileMenu() {
             {/* Mobile Menu Dropdown */}
             <div
                 className={`md:hidden mt-3 overflow-hidden transition-all duration-300 ease-out ${
-                    open ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'
+                    open ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
                 }`}
             >
                 <div className="rounded-xl border border-border/70 bg-background/90 backdrop-blur-sm p-3 space-y-1">

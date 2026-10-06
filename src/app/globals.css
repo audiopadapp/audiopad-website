@@ -3,6 +3,8 @@
 @import "shadcn/tailwind.css";
 @plugin "@tailwindcss/typography";
 
+
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -94,7 +96,7 @@
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: -apple-system, BlinkMacSystemFont, var(--font-sans), sans-serif;
 }
 
 .container-narrow {

@@ -7,8 +7,11 @@ import DownloadButton from "./download-button";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/story", label: "Our Story" },
   { href: "/download", label: "Download" },
+  { href: "/story", label: "Our Story" },
+  { href: "/changelog", label: "Changelog" },
+  { href: "/contribute", label: "Contribute" },
+  { href: "/press", label: "Brand Kit" },
 ];
 
 export default function DesktopNav() {
@@ -19,7 +22,7 @@ export default function DesktopNav() {
         <Logo />
       </Link>
 
-      <nav className="flex gap-8">
+      <nav className="flex items-center gap-5 lg:gap-7">
         {links.map((link) => (
           <Link
             key={link.href}

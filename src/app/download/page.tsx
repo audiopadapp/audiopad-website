@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import DownloadPlatforms from "@/components/DownloadPlatforms";
 import PatreonButton from "@/components/PatreonButton";
 import { 
@@ -78,9 +76,7 @@ export default async function DownloadPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="min-h-screen bg-background text-foreground font-sans pt-3">
-        <Nav />
-        <main className="relative">
+      <main className="relative">
           <DownloadPlatforms release={latestRelease} assets={assets} />
 
           <section className="p-12 bg-surface/40">
@@ -198,8 +194,6 @@ export default async function DownloadPage() {
             </div>
           </section>
         </main>
-        <Footer />
-      </div>
     </>
   );
 }

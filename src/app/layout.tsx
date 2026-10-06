@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-display' });
@@ -93,7 +95,14 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full" suppressHydrationWarning>
-        <TooltipProvider delayDuration={150}>{children}</TooltipProvider>
+        <TooltipProvider delayDuration={150}>
+          <div className="min-h-screen bg-background text-foreground font-sans pt-3">
+            <Nav />
+            {children}
+            <Footer />
+          </div>
+
+        </TooltipProvider>
       </body>
     </html>
   );

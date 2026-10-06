@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import LogoStrip from "@/components/LogoStrip";
 import Features from "@/components/Features";
@@ -7,8 +6,6 @@ import HowItWorks from "@/components/HowItWorks";
 import Compare from "@/components/Compare";
 import OpenSource from "@/components/OpenSource";
 import Faq from "@/components/Faq";
-import DownloadCTA from "@/components/DownloadCTA";
-import Footer from "@/components/Footer";
 import { fetchLatestRelease, filterReleaseAssets, formatFileSize } from "@/lib/github";
 import Sponsors from "@/components/Sponsors";
 
@@ -77,21 +74,17 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="min-h-screen bg-background text-foreground font-sans pt-3">
-        <Nav />
-        <main className="mt-12">
-          <Hero release={latestRelease} assets={assets} />
-          <LogoStrip />
-          <Features />
-          <HowItWorks />
-          <Compare />
-          <OpenSource />
-          <Sponsors />
-          <Faq />
-          {/* <DownloadCTA release={latestRelease} assets={assets} /> */}
-        </main>
-        <Footer />
-      </div>
+      <main className="mt-12">
+        <Hero release={latestRelease} assets={assets} />
+        <LogoStrip />
+        <Features />
+        <HowItWorks />
+        <Compare />
+        <OpenSource />
+        <Sponsors />
+        <Faq />
+        {/* <DownloadCTA release={latestRelease} assets={assets} /> */}
+      </main>
     </>
   );
 }

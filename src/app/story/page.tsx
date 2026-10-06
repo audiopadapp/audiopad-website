@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import { Heart, Gamepad2, Mic as Microphone, DollarSign, Lock, CheckCircle2, ArrowRight } from "lucide-react";
 import PatreonButton from "@/components/PatreonButton";
 
@@ -50,9 +48,7 @@ export default function StoryPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="min-h-screen bg-background text-foreground font-sans pt-3">
-        <Nav />
-        <main className="relative overflow-hidden mt-12 pt-8 pb-20 sm:pt-12 sm:pb-24 md:pt-16 md:pb-28">
+      <main className="relative overflow-hidden mt-12 pt-8 pb-20 sm:pt-12 sm:pb-24 md:pt-16 md:pb-28">
           <div className="pointer-events-none absolute inset-0 -z-10 grid-bg opacity-40" />
           <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-80 w-[500px] rounded-full bg-moss/10 blur-3xl -z-10" />
           
@@ -158,8 +154,6 @@ export default function StoryPage() {
             </div>
           </div>
         </main>
-        <Footer />
-      </div>
     </>
   );
 }

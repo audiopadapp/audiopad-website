@@ -35,7 +35,7 @@ export default function PatreonButton({
         className="inline-flex items-center gap-2 text-sm font-medium text-ink-soft transition-colors hover:text-[#FF424D] font-sans"
       >
         <Patreon className="h-4 w-4" />
-        Become a Patron
+        Become a Patreon
       </a>
     );
   }

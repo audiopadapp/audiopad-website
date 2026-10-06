@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="border-t bg-background p-12 pb-0">
       <div className="container-narrow py-12 sm:py-16">
-        <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-start lg:items-center">
+        <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-start">
           <div className="max-w-sm">
             <Logo />
 
@@ -19,24 +19,35 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-12 gap-y-6 text-sm sm:gap-x-16">
+          <div className="grid grid-cols-2 gap-x-10 gap-y-8 text-sm sm:grid-cols-3 sm:gap-x-12">
             <FooterCol
               title="Product"
               links={[
-                ["Our Story", "/story"],
-                ["Pricing", "/pricing"],
-                ["Press", "/press"],
+                ["Home", "/"],
                 ["Download", "/download"],
+                ["Changelog", "/changelog"],
+                ["Pricing", "/pricing"],
               ]}
             />
 
             <FooterCol
-        title="Project"
-        links={[
-          ["GitHub", "https://github.com/audiopadapp/audiopad"],
-          ["Patreon", "https://www.patreon.com/cw/audiopad_oss"],
-        ]}
-      />
+              title="Resources"
+              links={[
+                ["Our Story", "/story"],
+                ["Contribute", "/contribute"],
+                ["Changelog Guide", "/contribute/changelog"],
+                ["Press & Brand", "/press"],
+              ]}
+            />
+
+            <FooterCol
+              title="Project"
+              links={[
+                ["GitHub", "https://github.com/audiopadapp/audiopad"],
+                ["Patreon", "https://www.patreon.com/cw/audiopad_oss"],
+                ["Releases", "https://github.com/audiopadapp/audiopad/releases"],
+              ]}
+            />
           </div>
         </div>
 
