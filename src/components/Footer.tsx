@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Logo from "./Logo";
 import FooterCol from "./FooterCol";
 import VercelLogo from "./icons/VercelLogo";
@@ -37,24 +38,50 @@ export default function Footer() {
                 ["Contribute", "/contribute"],
                 ["Changelog Guide", "/contribute/changelog"],
                 ["Press & Brand", "/press"],
+                ["Privacy Policy", "/privacy"],
+                ["Terms of Use", "/terms"],
               ]}
             />
 
             <FooterCol
               title="Project"
               links={[
-                ["GitHub", "https://github.com/audiopadapp/audiopad"],
-                ["Patreon", "https://www.patreon.com/cw/audiopad_oss"],
+                ["Desktop App", "https://github.com/audiopadapp/audiopad"],
+                ["Website Source", "https://github.com/audiopadapp/audiopad-website"],
                 ["Releases", "https://github.com/audiopadapp/audiopad/releases"],
+                ["Patreon", "https://www.patreon.com/cw/audiopad_oss"],
               ]}
             />
           </div>
         </div>
 
         <div className="mt-12 p-1 flex flex-col items-start justify-between gap-4 border-t border-border text-xs text-ink-soft sm:mt-16 sm:flex-row sm:items-center">
-          <span className="font-mono">
-            © {year} AudioPad · GNU GPLv3 LICENSE
-          </span>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono">
+            <span>© {year} AudioPad · GNU GPLv3 LICENSE</span>
+            <span className="hidden sm:inline text-border">·</span>
+            <Link
+              href="/privacy"
+              className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
+            >
+              Privacy
+            </Link>
+            <span className="hidden sm:inline text-border">·</span>
+            <Link
+              href="/terms"
+              className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
+            >
+              Terms
+            </Link>
+            <span className="hidden sm:inline text-border">·</span>
+            <a
+              href="https://github.com/audiopadapp/audiopad-website"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
+            >
+              Edit website on GitHub
+            </a>
+          </div>
 
           <div className="flex items-center gap-5">
             <a

@@ -3,12 +3,14 @@ import {
   ArrowRight,
   Check,
   ChevronRight,
+  ExternalLink,
   FileCode2,
   FolderOpen,
   GitBranch,
   Image as ImageIcon,
   Info,
   Rocket,
+  SquarePen,
   Terminal,
   TriangleAlert,
 } from "lucide-react"
@@ -183,12 +185,26 @@ export default function ChangelogGuidePage() {
               <ArrowRight className="size-4" />
             </a>
 
-            <Link
+            <a
               href="https://github.com/audiopadapp/audiopad-website/tree/main/content/changelog"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex h-10 items-center gap-2 rounded-md border px-4 text-sm font-medium transition-colors hover:bg-muted"
             >
-              View changelog files
-            </Link>
+              Browse changelog files
+              <ExternalLink className="size-3.5 text-muted-foreground" />
+            </a>
+
+            <a
+              href="https://github.com/audiopadapp/audiopad-website/edit/main/src/app/contribute/changelog/page.tsx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 items-center gap-2 rounded-md border px-4 text-sm font-medium transition-colors hover:bg-muted"
+            >
+              <SquarePen className="size-3.5" />
+              Edit this guide
+              <ExternalLink className="size-3.5 text-muted-foreground" />
+            </a>
           </div>
         </div>
       </section>
@@ -556,21 +572,34 @@ imageAlt: The redesigned dashboard
           </p>
 
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <Link
+            <a
               href="https://github.com/audiopadapp/audiopad-website/tree/main/content/changelog"
-              className="inline-flex h-10 items-center gap-2 rounded-md bg-foreground px-4 text-sm font-medium text-background"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 items-center gap-2 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-90"
             >
               Open changelog directory
               <ArrowRight className="size-4" />
-            </Link>
+            </a>
 
             <Link
               href="/changelog"
-              className="inline-flex h-10 items-center gap-2 rounded-md border px-4 text-sm font-medium hover:bg-muted"
+              className="inline-flex h-10 items-center gap-2 rounded-md border px-4 text-sm font-medium transition-colors hover:bg-muted"
             >
               View changelog
               <ChevronRight className="size-4" />
             </Link>
+
+            <a
+              href="https://github.com/audiopadapp/audiopad-website/edit/main/src/app/contribute/changelog/page.tsx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 items-center gap-2 rounded-md border px-4 text-sm font-medium transition-colors hover:bg-muted"
+            >
+              <SquarePen className="size-4" />
+              Edit guide on GitHub
+              <ExternalLink className="size-3.5 text-muted-foreground" />
+            </a>
           </div>
         </div>
       </section>

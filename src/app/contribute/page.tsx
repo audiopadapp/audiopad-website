@@ -9,6 +9,7 @@ import {
   Heart,
   Monitor,
   Sparkles,
+  SquarePen,
   Terminal,
 } from "lucide-react";
 import { Github } from "@/components/icons";
@@ -128,6 +129,30 @@ export default function ContributePage() {
             releases to reporting bugs and suggesting ideas, all contributions are
             welcome.
           </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href="https://github.com/audiopadapp/audiopad-website"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-9 items-center gap-2 rounded-lg bg-foreground px-4 text-xs font-medium text-background transition-opacity hover:opacity-90"
+            >
+              <Github className="size-3.5" />
+              Website GitHub
+              <ExternalLink className="size-3 opacity-70" />
+            </a>
+
+            <a
+              href="https://github.com/audiopadapp/audiopad-website/edit/main/src/app/contribute/page.tsx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-border px-3.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
+            >
+              <SquarePen className="size-3.5" />
+              Edit this page on GitHub
+              <ExternalLink className="size-3 text-muted-foreground" />
+            </a>
+          </div>
         </div>
       </section>
 
