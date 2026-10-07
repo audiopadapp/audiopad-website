@@ -48,7 +48,7 @@ const included = [
   { label: "Sub-20ms latency", note: null },
   { label: "No ads", note: null },
   { label: "No account", note: "We don't even know your name." },
-  { label: "MIT License", note: null },
+  { label: "GNU GPLv3 License", note: null },
 ];
 
 
