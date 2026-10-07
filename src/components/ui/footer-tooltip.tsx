@@ -20,7 +20,7 @@ export default function FooterTooltip() {
       </TooltipTrigger>
 
       <TooltipContent side="top">
-        <p>Yeah... I can't scream it. 🤫</p>
+        <p>Yeah... I can&apos;t scream it. 🤫</p>
       </TooltipContent>
     </Tooltip>
   );

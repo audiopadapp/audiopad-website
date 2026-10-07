@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Heart, Gamepad2, Mic as Microphone, DollarSign, Lock, CheckCircle2, ArrowRight } from "lucide-react";
+import { Heart, Mic as Microphone, DollarSign, Lock, CheckCircle2, ArrowRight } from "lucide-react";
 import PatreonButton from "@/components/PatreonButton";
 
 export const metadata: Metadata = {
@@ -77,7 +77,7 @@ export default function StoryPage() {
                   </p>
 
                   <p>
-                    And don&apos;t even get me started on the "free" ones that lock half the good shit behind a paywall, or spam you with ads mid-ranked game. Like, bro, I&apos;m trying to clutch a 1v5, not listen to a Raid Shadow Legends ad.
+                    And don&apos;t even get me started on the &quot;free&quot; ones that lock half the good shit behind a paywall, or spam you with ads mid-ranked game. Like, bro, I&apos;m trying to clutch a 1v5, not listen to a Raid Shadow Legends ad.
                   </p>
 
                   <p className="flex gap-4 items-start">

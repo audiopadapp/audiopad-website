@@ -6,7 +6,12 @@ import HowItWorks from "@/components/HowItWorks";
 import Compare from "@/components/Compare";
 import OpenSource from "@/components/OpenSource";
 import Faq from "@/components/Faq";
-import { fetchLatestRelease, filterReleaseAssets, formatFileSize } from "@/lib/github";
+import { 
+  fetchLatestRelease, 
+  fetchAllReleases, 
+  filterReleaseAssets, 
+  calculateTotalDownloads 
+} from "@/lib/github";
 import Sponsors from "@/components/Sponsors";
 
 export const metadata: Metadata = {
@@ -39,8 +44,12 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const latestRelease = await fetchLatestRelease();
+  const [latestRelease, allReleases] = await Promise.all([
+    fetchLatestRelease(),
+    fetchAllReleases(),
+  ]);
   const assets = latestRelease ? filterReleaseAssets(latestRelease) : null;
+  const totalDownloads = calculateTotalDownloads(allReleases);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -75,7 +84,11 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main className="mt-12">
-        <Hero release={latestRelease} assets={assets} />
+        <Hero 
+          release={latestRelease} 
+          assets={assets} 
+          totalDownloads={totalDownloads} 
+        />
         <LogoStrip />
         <Features />
         <HowItWorks />

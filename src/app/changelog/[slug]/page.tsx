@@ -8,6 +8,7 @@ import {
   ArrowLeft,
   ArrowRight,
   CalendarDays,
+  DownloadIcon,
   ExternalLink,
   FileCode2,
   SquarePen,
@@ -15,12 +16,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { changelogMdxComponents } from "@/components/changelog/mdx-components";
+import { Github } from "@/components/icons";
 import {
   SITE_URL,
   formatDate,
   getChangelogEntries,
   getChangelogEntry,
 } from "@/lib/changelog";
+import { fetchAllReleases, getReleaseTotalDownloads } from "@/lib/github";
 
 const GITHUB_REPO_URL = "https://github.com/audiopadapp/audiopad-website";
 
@@ -86,6 +89,12 @@ export default async function ChangelogEntryPage({ params }: Props) {
   const { slug } = await params;
   const entry = getChangelogEntry(slug);
   if (!entry) notFound();
+
+  const allReleases = await fetchAllReleases();
+  const release = allReleases.find(
+    (r) => r.tag_name === entry.slug || r.tag_name === entry.version
+  );
+  const releaseDownloads = release ? getReleaseTotalDownloads(release) : 0;
 
   // Entries are sorted newest first.
   const all = getChangelogEntries();
@@ -180,6 +189,24 @@ export default async function ChangelogEntryPage({ params }: Props) {
               All releases
             </Link>
 
+            <div className="space-y-3">
+              <p className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">
+                Download
+              </p>
+              <Link
+                href="/download"
+                className="bg-foreground text-background hover:opacity-90 inline-flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium transition-opacity"
+              >
+                <DownloadIcon className="size-3.5" />
+                <span>Download AudioPad</span>
+              </Link>
+              {releaseDownloads > 0 && (
+                <p className="text-muted-foreground font-mono text-[11px] text-center">
+                  <span className="text-foreground font-semibold">{releaseDownloads.toLocaleString()}</span> downloads for {entry.version}
+                </p>
+              )}
+            </div>
+
             <Separator />
 
             <div className="space-y-3">
@@ -247,6 +274,15 @@ export default async function ChangelogEntryPage({ params }: Props) {
               <div className="flex flex-wrap items-center gap-3">
                 <Badge className="font-mono">{entry.version}</Badge>
                 {index === 0 && <Badge variant="secondary">Latest</Badge>}
+                {releaseDownloads > 0 && (
+                  <Badge
+                    variant="outline"
+                    className="font-mono text-xs font-normal gap-1 border-border text-foreground bg-surface"
+                  >
+                    <DownloadIcon className="size-3 text-moss" />
+                    {releaseDownloads.toLocaleString()} downloads
+                  </Badge>
+                )}
                 <span className="text-muted-foreground flex items-center gap-1.5 text-sm">
                   <CalendarDays className="size-4" />
                   <time dateTime={entry.date.toISOString()}>
@@ -255,16 +291,30 @@ export default async function ChangelogEntryPage({ params }: Props) {
                 </span>
               </div>
 
-              <a
-                href={githubEditUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground hover:bg-muted inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors"
-              >
-                <SquarePen className="size-3.5" />
-                <span>Edit page</span>
-                <ExternalLink className="text-muted-foreground/60 size-3" />
-              </a>
+              <div className="flex flex-wrap items-center gap-2">
+                {release && (
+                  <a
+                    href={release.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors"
+                  >
+                    <Github className="size-3.5" />
+                    <span>GitHub Release</span>
+                    <ExternalLink className="text-muted-foreground/60 size-3" />
+                  </a>
+                )}
+                <a
+                  href={githubEditUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground hover:bg-muted inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-medium transition-colors"
+                >
+                  <SquarePen className="size-3.5" />
+                  <span>Edit page</span>
+                  <ExternalLink className="text-muted-foreground/60 size-3" />
+                </a>
+              </div>
             </div>
 
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">

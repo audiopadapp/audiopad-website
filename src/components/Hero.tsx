@@ -1,13 +1,10 @@
+import Link from "next/link";
+import { DownloadIcon } from "lucide-react";
 import { Github } from "@/components/icons";
 import DownloadButton from "./ui/download-button";
 import { Button } from "./ui/button";
 import VideoPlayer from "./ui/video-player";
-
-type GitHubReleaseAsset = {
-  name: string;
-  browser_download_url: string;
-  size: number;
-};
+import { GitHubReleaseAsset, formatFileSize } from "@/lib/github";
 
 type HeroProps = {
   release: { tag_name: string; html_url: string } | null;
@@ -19,20 +16,34 @@ type HeroProps = {
       appImage?: GitHubReleaseAsset;
     };
   } | null;
+  totalDownloads?: number;
 };
 
-export default function Hero({ release, assets }: HeroProps) {
+export default function Hero({ release, assets, totalDownloads }: HeroProps) {
   return (
     <section className="relative overflow-hidden border-border/70 mb-20 sm:mb-24 md:mb-28 bg-background">
       <div className="pointer-events-none absolute inset-0 -z-10 grid-bg opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
       <div className="container-narrow pt-20 pb-16 sm:pt-28 sm:pb-24 md:pt-32 md:pb-28">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 font-mono text-xs text-ink-soft">
-            <span className="h-1.5 w-1.5 rounded-full bg-moss" />
-            <span>
-              {release ? `${release.tag_name} — Free & open source` : "v1.0 — Free & open source"}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 font-mono text-xs text-ink-soft">
+              <span className="h-1.5 w-1.5 rounded-full bg-moss" />
+              <span>
+                {release ? `${release.tag_name} — Free & open source` : "v1.0 — Free & open source"}
+              </span>
             </span>
-          </span>
+
+            {totalDownloads !== undefined && totalDownloads > 0 && (
+              <Link
+                href="/download"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1 font-mono text-xs text-ink-soft hover:text-foreground hover:border-moss/40 transition-colors"
+              >
+                <DownloadIcon className="h-3 w-3 text-moss" />
+                <span className="font-semibold text-foreground">{totalDownloads.toLocaleString()}</span>
+                <span>downloads</span>
+              </Link>
+            )}
+          </div>
 
           <h1 className="mt-8 font-serif text-4xl leading-[1.05] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
             Play any sound <em className="italic text-moss">through</em> your microphone.
@@ -55,7 +66,12 @@ export default function Hero({ release, assets }: HeroProps) {
             </a>
           </div>
 
-          <p className="mt-6 font-mono text-xs text-ink-soft">Windows 10/11 · Linux · ~14 MB</p>
+          <p className="mt-6 font-mono text-xs text-ink-soft">
+            Windows 10/11 · Linux · {assets?.windows?.size ? formatFileSize(assets.windows.size) : "~14 MB"}
+            {totalDownloads !== undefined && totalDownloads > 0 && (
+              <> · <span className="text-foreground font-medium">{totalDownloads.toLocaleString()}</span> downloads</>
+            )}
+          </p>
         </div>
 
         <div className="relative mx-auto mt-12 sm:mt-16 max-w-5xl">

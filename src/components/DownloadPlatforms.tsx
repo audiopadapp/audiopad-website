@@ -1,15 +1,9 @@
 'use client';
 import Image from "next/image";
-import { ArrowRight, CheckCircle2, DownloadIcon, ShieldCheck } from "lucide-react";
-import { useState, useEffect } from "react";
+import { ArrowRight, DownloadIcon } from "lucide-react";
+import { useSyncExternalStore } from "react";
 import { Windows, Linux } from "@/components/icons";
-import { formatFileSize } from "@/lib/github";
-
-type GitHubReleaseAsset = {
-  name: string;
-  browser_download_url: string;
-  size: number;
-};
+import { formatFileSize, GitHubReleaseAsset } from "@/lib/github";
 
 type DownloadPlatformsProps = {
   release: {
@@ -24,34 +18,43 @@ type DownloadPlatformsProps = {
       appImage?: GitHubReleaseAsset;
     };
   } | null;
+  totalDownloads?: number;
 };
 
 type OS = 'windows' | 'linux' | 'unknown';
 
-function getOS(): OS {
-  if (typeof window === 'undefined') return 'unknown';
-  const userAgent = window.navigator.userAgent.toLowerCase();
+const emptySubscribe = () => () => {};
 
+function getOSSnapshot(): OS {
+  if (typeof window === "undefined") return "unknown";
+  const userAgent = window.navigator.userAgent.toLowerCase();
   if (userAgent.includes('win')) return 'windows';
   if (userAgent.includes('linux')) return 'linux';
   return 'unknown';
 }
 
-export default function DownloadPlatforms({ release, assets }: DownloadPlatformsProps) {
-  const [os, setOs] = useState<OS>('unknown');
+function getServerOSSnapshot(): OS {
+  return 'unknown';
+}
 
-  useEffect(() => {
-    setOs(getOS());
-  }, []);
+export default function DownloadPlatforms({ release, assets, totalDownloads }: DownloadPlatformsProps) {
+  const os = useSyncExternalStore(emptySubscribe, getOSSnapshot, getServerOSSnapshot);
+
+  const formatAssetDetail = (asset?: GitHubReleaseAsset, fallback = "") => {
+    if (!asset) return fallback;
+    const base = `${asset.name} · ${formatFileSize(asset.size)}`;
+    if (asset.download_count && asset.download_count > 0) {
+      return `${base} · ${asset.download_count.toLocaleString()} downloads`;
+    }
+    return base;
+  };
 
   const builds = [
     {
       os: "Windows",
       icon: Windows,
       key: "windows" as OS,
-      detail: assets?.windows
-        ? `${assets.windows.name} · ${formatFileSize(assets.windows.size)}`
-        : ".exe · Win 10/11",
+      detail: formatAssetDetail(assets?.windows, ".exe · Win 10/11"),
       href: assets?.windows?.browser_download_url || "#"
     },
     {
@@ -81,9 +84,7 @@ export default function DownloadPlatforms({ release, assets }: DownloadPlatforms
       options: [
         {
           label: "Windows",
-          detail: assets?.windows
-            ? `${assets.windows.name} · ${formatFileSize(assets.windows.size)}`
-            : ".exe installer",
+          detail: formatAssetDetail(assets?.windows, ".exe installer"),
           href: assets?.windows?.browser_download_url ?? "#",
           available: Boolean(assets?.windows),
         },
@@ -96,7 +97,7 @@ export default function DownloadPlatforms({ release, assets }: DownloadPlatforms
       options: linuxOptions.length
         ? linuxOptions.map((option) => ({
           label: option.label,
-          detail: `${option.asset!.name} · ${formatFileSize(option.asset!.size)}`,
+          detail: formatAssetDetail(option.asset, "Linux package"),
           href: option.asset!.browser_download_url,
           available: true,
         }))
@@ -123,9 +124,17 @@ export default function DownloadPlatforms({ release, assets }: DownloadPlatforms
             className="h-10 w-10 object-contain"
           />
         </div>
-        <span className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-[11px] font-mono text-ink-soft">
-          Desktop download
-        </span>
+        <div className="flex items-center justify-center gap-2 flex-wrap">
+          <span className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-[11px] font-mono text-ink-soft">
+            Desktop download
+          </span>
+          {totalDownloads !== undefined && totalDownloads > 0 && (
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1 text-[11px] font-mono text-ink-soft">
+              <DownloadIcon className="h-3 w-3 text-moss" />
+              <strong className="text-foreground font-medium">{totalDownloads.toLocaleString()}</strong> total downloads
+            </span>
+          )}
+        </div>
         <h2 className="mt-5 font-serif text-4xl tracking-tight text-foreground sm:text-5xl">
           Download AudioPad.
         </h2>

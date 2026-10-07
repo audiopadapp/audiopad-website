@@ -1,4 +1,4 @@
-import { Plus, Trophy, Heart, HeartHandshake, Star, Zap } from "lucide-react";
+import { Plus, Trophy, Heart, HeartHandshake } from "lucide-react";
 import Image from "next/image";
 
 type Sponsor = {
@@ -104,40 +104,40 @@ const SponsorLogo = ({ sponsor, logoSize }: { sponsor: Sponsor; logoSize: string
   </Tooltip>
 );
 
+function TierSection({
+  tier,
+  sponsors,
+}: {
+  tier: "platinum" | "gold" | "bronze";
+  sponsors: Sponsor[];
+}) {
+  const config = tierConfig[tier];
+  const Icon = config.icon;
+
+  return (
+    <div className="mb-16">
+      <div className="flex items-center gap-3 mb-8">
+        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+        <h2 className="font-serif text-2xl sm:text-3xl text-foreground flex items-center gap-2">
+          <Icon className={`h-6 w-6 ${config.color}`} />
+          {config.label}
+        </h2>
+        <div className="h-px flex-1 bg-gradient-to-l from-transparent via-border to-transparent" />
+      </div>
+      <div className="flex flex-wrap items-center gap-6 md:gap-8">
+        {sponsors.map((sponsor, idx) => (
+          <SponsorLogo key={`${tier}-${idx}`} sponsor={sponsor} logoSize={config.logoSize} />
+        ))}
+        <PlaceholderButton />
+      </div>
+    </div>
+  );
+}
+
 export default function Sponsors() {
   const platinumSponsors = patreonSponsors.filter((s) => s.tier === "platinum");
   const goldSponsors = patreonSponsors.filter((s) => s.tier === "gold");
   const bronzeSponsors = patreonSponsors.filter((s) => s.tier === "bronze");
-
-  const TierSection = ({
-    tier,
-    sponsors,
-  }: {
-    tier: "platinum" | "gold" | "bronze";
-    sponsors: Sponsor[];
-  }) => {
-    const config = tierConfig[tier];
-    const Icon = config.icon;
-
-    return (
-      <div className="mb-16">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
-          <h2 className="font-serif text-2xl sm:text-3xl text-foreground flex items-center gap-2">
-            <Icon className={`h-6 w-6 ${config.color}`} />
-            {config.label}
-          </h2>
-          <div className="h-px flex-1 bg-gradient-to-l from-transparent via-border to-transparent" />
-        </div>
-        <div className="flex flex-wrap items-center gap-6 md:gap-8">
-          {sponsors.map((sponsor, idx) => (
-            <SponsorLogo key={`${tier}-${idx}`} sponsor={sponsor} logoSize={config.logoSize} />
-          ))}
-          <PlaceholderButton />
-        </div>
-      </div>
-    );
-  };
 
   return (
     <section className="container-narrow py-16 sm:py-20 md:py-24">

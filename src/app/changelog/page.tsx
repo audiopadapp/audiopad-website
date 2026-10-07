@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, DownloadIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { SITE_URL, formatDate, getChangelogEntries } from "@/lib/changelog";
+import { 
+  fetchAllReleases, 
+  calculateTotalDownloads, 
+  getReleaseTotalDownloads 
+} from "@/lib/github";
 
 export const metadata: Metadata = {
   title: "Changelog — AudioPad Release Notes & Updates",
@@ -47,9 +52,13 @@ export const metadata: Metadata = {
 const eyebrow =
   "font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground";
 
-export default function ChangelogPage() {
-  const entries = getChangelogEntries();
-  const latest = entries[0];
+export default async function ChangelogPage() {
+  const [entries, allReleases] = await Promise.all([
+    getChangelogEntries(),
+    fetchAllReleases(),
+  ]);
+  const totalDownloads = calculateTotalDownloads(allReleases);
+  const releaseMap = new Map(allReleases.map((r) => [r.tag_name, r]));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -116,17 +125,33 @@ export default function ChangelogPage() {
       {/* Hero */}
       <section className="border-b">
         <div className="mx-auto max-w-5xl px-4 py-12 sm:py-12">
-          <h1 className="text-5xl font-medium tracking-tight sm:text-5xl">
-            Changelog
-          </h1>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-5xl font-medium tracking-tight sm:text-5xl">
+                Changelog
+              </h1>
 
-          <p className="mt-5 max-w-lg text-lg text-muted-foreground">
-            See what&apos;s new in{" "}
-            <span className="font-serif font-normal text-emerald-700 dark:text-emerald-400">
-              AudioPad
-            </span>
-            .
-          </p>
+              <p className="mt-5 max-w-lg text-lg text-muted-foreground">
+                See what&apos;s new in{" "}
+                <span className="font-serif font-normal text-emerald-700 dark:text-emerald-400">
+                  AudioPad
+                </span>
+                .
+              </p>
+            </div>
+
+            {totalDownloads > 0 && (
+              <div className="inline-flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-3 font-mono">
+                <DownloadIcon className="h-5 w-5 text-moss" />
+                <div>
+                  <div className="text-foreground font-semibold text-sm">
+                    {totalDownloads.toLocaleString()}
+                  </div>
+                  <div className="text-ink-soft text-[11px]">total downloads</div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
@@ -139,64 +164,88 @@ export default function ChangelogPage() {
             <p className="text-muted-foreground text-center">No updates yet.</p>
           ) : (
             <ol>
-              {entries.map((entry, i) => (
-                <li key={entry.slug} className="grid md:grid-cols-[10rem_1fr] mb-8">
-                  {/* Left: date + version (desktop) */}
-                  <div className="hidden pr-8 text-right md:block">
-                    <div className="sticky top-24 space-y-2 pt-0.5">
-                      <time
-                        dateTime={entry.date.toISOString()}
-                        className="block text-sm font-medium"
-                      >
-                        {formatDate(entry.date)}
-                      </time>
-                      <span className="text-muted-foreground block font-mono text-xs">
-                        {entry.version}
-                      </span>
-                    </div>
-                  </div>
+              {entries.map((entry, i) => {
+                const release = releaseMap.get(entry.version);
+                const releaseDownloads = release ? getReleaseTotalDownloads(release) : null;
 
-                  {/* Right: tracking line + card */}
-                  <div className="relative border-l pb-12 pl-6 last:pb-0 md:pl-10">
-                    <span
-                      className={`ring-muted absolute -left-[6px] top-1.5 size-3 rounded-full ring-4 ${
-                        i === 0 ? "bg-emerald-600" : "bg-border"
-                      }`}
-                    />
-
-                    {/* Meta (mobile) */}
-                    <div className="mb-3 flex items-center gap-3 md:hidden">
-                      <span className="font-mono text-xs">{entry.version}</span>
-                      <time
-                        dateTime={entry.date.toISOString()}
-                        className="text-muted-foreground text-sm"
-                      >
-                        {formatDate(entry.date)}
-                      </time>
+                return (
+                  <li key={entry.slug} className="grid md:grid-cols-[10rem_1fr] mb-8">
+                    {/* Left: date + version (desktop) */}
+                    <div className="hidden pr-8 text-right md:block">
+                      <div className="sticky top-24 space-y-2 pt-0.5">
+                        <time
+                          dateTime={entry.date.toISOString()}
+                          className="block text-sm font-medium"
+                        >
+                          {formatDate(entry.date)}
+                        </time>
+                        <span className="text-muted-foreground block font-mono text-xs">
+                          {entry.version}
+                        </span>
+                        {releaseDownloads !== null && releaseDownloads > 0 && (
+                          <span className="inline-flex items-center gap-1 font-mono text-[11px] text-ink-soft">
+                            <DownloadIcon className="size-3 text-moss" />
+                            {releaseDownloads.toLocaleString()}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
-                    <Link
-                      href={`/changelog/${entry.slug}`}
-                      className="group bg-background hover:border-foreground/30 block overflow-hidden rounded-xl border transition-colors"
-                    >
-                      {entry.image && (
-                        <div className="relative aspect-video overflow-hidden border-b">
-                          <Image
-                            src={entry.image}
-                            alt={entry.imageAlt ?? entry.title}
-                            fill
-                            priority={i === 0}
-                            loading={i === 0 ? "eager" : "lazy"}
-                            sizes="(min-width: 768px) 640px, 100vw"
-                            className="object-cover"
-                          />
-                        </div>
-                      )}
+                    {/* Right: tracking line + card */}
+                    <div className="relative border-l pb-12 pl-6 last:pb-0 md:pl-10">
+                      <span
+                        className={`ring-muted absolute -left-[6px] top-1.5 size-3 rounded-full ring-4 ${
+                          i === 0 ? "bg-emerald-600" : "bg-border"
+                        }`}
+                      />
 
-                      <div className="space-y-3 p-5 sm:p-6">
-                        {(i === 0 || entry.tags.length > 0) && (
+                      {/* Meta (mobile) */}
+                      <div className="mb-3 flex items-center gap-3 md:hidden">
+                        <span className="font-mono text-xs">{entry.version}</span>
+                        <time
+                          dateTime={entry.date.toISOString()}
+                          className="text-muted-foreground text-sm"
+                        >
+                          {formatDate(entry.date)}
+                        </time>
+                        {releaseDownloads !== null && releaseDownloads > 0 && (
+                          <span className="inline-flex items-center gap-1 font-mono text-xs text-ink-soft">
+                            <DownloadIcon className="size-3 text-moss" />
+                            {releaseDownloads.toLocaleString()}
+                          </span>
+                        )}
+                      </div>
+
+                      <Link
+                        href={`/changelog/${entry.slug}`}
+                        className="group bg-background hover:border-foreground/30 block overflow-hidden rounded-xl border transition-colors"
+                      >
+                        {entry.image && (
+                          <div className="relative aspect-video overflow-hidden border-b">
+                            <Image
+                              src={entry.image}
+                              alt={entry.imageAlt ?? entry.title}
+                              fill
+                              priority={i === 0}
+                              loading={i === 0 ? "eager" : "lazy"}
+                              sizes="(min-width: 768px) 640px, 100vw"
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
+
+                        <div className="space-y-3 p-5 sm:p-6">
                           <div className="flex flex-wrap items-center gap-2">
                             {i === 0 && <Badge>Latest</Badge>}
+                            {releaseDownloads !== null && releaseDownloads > 0 && (
+                              <Badge
+                                variant="outline"
+                                className="font-mono text-[10px] font-normal tracking-wider gap-1 border-border text-foreground bg-surface"
+                              >
+                                <DownloadIcon className="size-3 text-moss" />
+                                {releaseDownloads.toLocaleString()} downloads
+                              </Badge>
+                            )}
                             {entry.tags.map((tag) => (
                               <Badge
                                 key={tag}
@@ -207,27 +256,27 @@ export default function ChangelogPage() {
                               </Badge>
                             ))}
                           </div>
-                        )}
 
-                        <h2 className="text-xl font-medium tracking-tight sm:text-2xl">
-                          {entry.title}
-                        </h2>
+                          <h2 className="text-xl font-medium tracking-tight sm:text-2xl">
+                            {entry.title}
+                          </h2>
 
-                        {entry.description && (
-                          <p className="text-muted-foreground text-sm leading-relaxed sm:text-base">
-                            {entry.description}
-                          </p>
-                        )}
+                          {entry.description && (
+                            <p className="text-muted-foreground text-sm leading-relaxed sm:text-base">
+                              {entry.description}
+                            </p>
+                          )}
 
-                        <span className="inline-flex items-center gap-1 pt-1 text-sm font-medium">
-                          Read release notes
-                          <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                        </span>
-                      </div>
-                    </Link>
-                  </div>
-                </li>
-              ))}
+                          <span className="inline-flex items-center gap-1 pt-1 text-sm font-medium">
+                            Read release notes
+                            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                          </span>
+                        </div>
+                      </Link>
+                    </div>
+                  </li>
+                );
+              })}
             </ol>
           )}
         </div>
