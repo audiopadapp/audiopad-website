@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     "AudioPad release notes",
     "soundboard changelog",
     "open source soundboard updates",
+    "AudioPad v1.1.1",
     "AudioPad v1.1.0",
     "Discord soundboard updates",
   ],

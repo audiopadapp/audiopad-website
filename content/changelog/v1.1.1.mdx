@@ -1,0 +1,88 @@
+---
+title: "AudioPad 1.1.1: Image Assignment Fixes, Multi-Select & 50× Memory Reduction"
+description: "Resolves image persistence issues, introduces Ctrl+Click multi-select batch actions, fixes Stream Deck tile clipping, and drastically slashes memory and CPU usage."
+version: v1.1.1
+date: 2026-10-07
+tags: [fix, performance, improvement, feature]
+image: /changelog/v1.1.1/v111.jpg
+imageAlt: "AudioPad v1.1.1 release cover"
+---
+
+AudioPad 1.1.1 is a major stability, performance, and usability update addressing issue [#12](https://github.com/audiopadapp/audiopad/issues/12). This release fixes critical image assignment and persistence bugs, introduces multi-selection batch image management, prevents resource overload on large soundboard categories, makes the Media Grid View configurable, and refines the Stream Deck tile display.
+
+## Highlights
+
+- **Image Persistence & Vanishing Fix**: Assigned sound images no longer vanish after one second and reliably persist across application restarts.
+- **50× Memory & CPU Optimization**: Slashed RAM consumption from ~2 GB down to ~42 MB on large soundboards, with near-zero idle CPU overhead.
+- **Multi-Select & Batch Image Controls**: Hold `Ctrl` (or `Cmd`) and click to select multiple sounds, then assign or clear images in bulk using a floating action bar or right-click context menu.
+- **Configurable Default View Mode**: AudioPad now launches into Media Grid View by default, and you can customize your preferred default view in Settings.
+- **Stream Deck Tile Polish**: Fixed text clipping on empty soundboard tiles and added word-wrapping with enhanced text shadows for crisp legibility over cover art.
+
+---
+
+## Performance: 50× Memory Reduction & Zero Lag
+
+In previous versions, assigning cover images to large categories (50+ sounds) caused severe UI stutter and spiked resource consumption. This occurred because multi-megabyte uncompressed images were converted into giant Base64 strings duplicated across sound objects (resulting in 300MB+ stored in memory and `config.json`), and the frontend polled the native IPC bridge with `JSON.stringify()` on every tick.
+
+### Before vs. After Optimization
+
+| Metric | Before v1.1.1 | After v1.1.1 | Impact |
+|---|---|---|---|
+| **Total Process Memory (RAM)** | ~1,993.6 MB (~2.0 GB) | **42.6 MB** | **~50× reduction** (98% less RAM) |
+| **WebView2 UI RAM** | ~1,840.5 MB | **38.4 MB** | **~48× reduction** |
+| **CPU Usage (Idle / Polling)** | 23.8% continuous spikes | **0.3%** | **~80× less CPU overhead** |
+| **Stored Image Size** | 5–10 MB per sound | **~15–25 KB** | **~300× reduction** per card |
+| **IPC Polling Strategy** | 1-second full JSON stringify | **4-second hash signature** | Eliminated bridge bottlenecks |
+
+#### Before: Memory & CPU Overload (~2 GB RAM)
+
+Prior to v1.1.1, loading 50+ sounds with images inflated Task Manager memory to nearly 2 GB, while continuous JSON serialization drove CPU usage past 23%:
+
+![Task Manager before optimization: audiopad.exe consuming 23.8% CPU and 1,993.6 MB RAM](/changelog/v1.1.1/before.png)
+
+#### After: Streamlined & Fast (42.6 MB RAM)
+
+With client-side canvas compression (`optimizeImage`) downscaling images to crisp 300×300 thumbnails and lightweight signature-based state checks, resource usage dropped to just 42.6 MB and 0.3% CPU:
+
+![Task Manager after optimization: audiopad.exe consuming 0.3% CPU and 42.6 MB RAM](/changelog/v1.1.1/after.png)
+
+---
+
+## Added
+
+- **Multi-Select Sounds (`Ctrl + Click`)**: Hold `Ctrl` (or `Cmd` on macOS) and left-click sounds to select multiple items across the Media Grid, Stream Deck, and Table views. Selected cards are highlighted with a blue glowing focus outline.
+- **Floating Selection Action Bar**: When sounds are selected, a quick-action toolbar appears showing the selection count along with **Assign Image**, **Remove Images**, and **Deselect All** buttons.
+- **Batch Context Menu Actions**: Right-clicking any selected card displays batch management options:
+  - **Assign Image to Selected (X sounds)...**
+  - **Remove Images from Selected (X sounds)**
+- **Batch Removal in Modal**: Added a dedicated **Remove Images** button inside the Multi-Image assignment dialog.
+- **Configurable Default View Mode**: Added a new setting under **Settings** → **Default Layout & View Mode** → **Default Soundboard View Mode**. Choose whether AudioPad opens in **Media Grid View**, **Stream Deck Macro Pads**, or **Soundpad High-Density Table**.
+
+---
+
+## Improved
+
+- **Media Grid as Default**: AudioPad now launches into the modern **Media Grid View** out-of-the-box instead of Stream Deck tiles.
+- **Thumbnail Compression (`optimizeImage`)**: Imported sound images are automatically downscaled via HTML5 Canvas into compact WebP/PNG thumbnails (~15–25 KB), keeping your library fast and `config.json` compact.
+- **Stream Deck Text Legibility**: Sound names now use `word-break: break-word` and high-contrast text shadowing so titles remain readable regardless of custom background images.
+
+---
+
+## Fixed
+
+- **Image Vanishing Bug ([#12](https://github.com/audiopadapp/audiopad/issues/12))**: Fixed a bug where assigning an image caused it to render for 1 second and then vanish. A guard in `Data::set()` now ensures global sound pointer tables (`Globals::gSounds`) are only cleared and repointed when modifying the active data instance rather than transient configuration copies.
+- **Persistent Image Disk Serialization**: Updated `Data::setSoundImage` and `Data::setSoundsImage` to directly mutate tab sound collections, ensuring cover art reliably saves to disk when `gConfig.save()` runs.
+- **Special & Non-ASCII Filename Preservation**: Enhanced path resolution in `Window::getTabContent` with case-insensitivity, slash normalization (`\` vs `/`), and fallback name matching. Custom hotkeys, favorites, and images now persist properly across restarts for MP3/WAV files with Polish or accented characters.
+- **Image Removal Failure**: Fixed an issue where clicking "Remove Image" on a single sound caused the image to reappear after 1 second due to desynchronized configuration references.
+- **Stream Deck Tile Clipping**: Removed an overlapping placeholder music note icon on unassigned Stream Deck tiles and vertically centered the sound title container, eliminating title clipping and truncation.
+
+---
+
+## Testing & Verification
+
+To verify these fixes in your own setup:
+
+1. **Test Image Persistence**: Right-click any sound (including files with special characters or in Mono/Stereo formats) → **Assign Image...**. The image will remain immediately and persist after restarting AudioPad.
+2. **Test Multi-Select**: Hold `Ctrl` and select 3 sounds. Use the floating action bar to assign or remove images across all 3 sounds simultaneously.
+3. **Test Large Soundboards**: Load a category with 50+ sounds and assign images to all of them. Task Manager will remain smooth at ~40–50 MB RAM with minimal CPU load.
+4. **Test View Mode Setting**: Navigate to **Settings**, change your default view mode, and restart AudioPad to confirm your preferred layout loads automatically.

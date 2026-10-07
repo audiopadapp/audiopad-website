@@ -41,7 +41,11 @@ export const getChangelogEntries = cache((): ChangelogEntry[] => {
 
       return { ...parsed.data, slug, content };
     })
-    .sort((a, b) => b.date.getTime() - a.date.getTime());
+    .sort((a, b) => {
+      const dateDiff = b.date.getTime() - a.date.getTime();
+      if (dateDiff !== 0) return dateDiff;
+      return b.slug.localeCompare(a.slug, undefined, { numeric: true });
+    });
 });
 
 export function getChangelogEntry(slug: string) {
